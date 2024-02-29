@@ -1,5 +1,6 @@
 HELP.md
 .gradle
+build.gradle
 gradlew
 gradlew.bat
 gradle/
