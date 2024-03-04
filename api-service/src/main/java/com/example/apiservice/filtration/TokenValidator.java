@@ -34,6 +34,7 @@ public class TokenValidator {
      * @return возвращается полученный из ответа результат валидации токена
      */
     public TokenValidationResponse validate(String token) {
+
         // создание HTTP заголовков с переданным токеном
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", token);

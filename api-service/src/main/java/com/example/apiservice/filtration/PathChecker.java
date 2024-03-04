@@ -15,7 +15,7 @@ public class PathChecker {
     //список, который содержит URI открытых API эндпоинтов.
     public static final List<String> publicEndpoints = List.of("/swagger-ui","/api-docs");
 
-    public Predicate<ServerHttpRequest> isSecured = this::isNotPublic;
+    public Predicate<ServerHttpRequest> isProtected = this::isNotPublic;
 
     /**
      * Метод для проверки - является ли запрос защищенным или публичным.

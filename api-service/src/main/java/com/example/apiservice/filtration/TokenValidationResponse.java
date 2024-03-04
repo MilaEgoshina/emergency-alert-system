@@ -3,10 +3,10 @@ package com.example.apiservice.filtration;
 
 public class TokenValidationResponse {
 
-    private Long clientId;
+    private String clientId;
     private boolean isValid;
 
-    public Long getClientId() {
+    public String getClientId() {
         return clientId;
     }
 
@@ -14,7 +14,7 @@ public class TokenValidationResponse {
         return isValid;
     }
 
-    public void setClientId(Long clientId) {
+    public void setClientId(String clientId) {
         this.clientId = clientId;
     }
 
