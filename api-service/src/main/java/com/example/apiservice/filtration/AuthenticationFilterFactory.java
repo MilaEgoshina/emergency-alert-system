@@ -17,16 +17,13 @@ public class AuthenticationFilterFactory extends AbstractGatewayFilterFactory<Au
     private final PathChecker pathChecker;
     private final TokenValidator tokenValidator;
 
-    public AuthenticationFilterFactory(PathChecker pathChecker, TokenValidator tokenValidator) {
-        this.pathChecker = pathChecker;
-        this.tokenValidator = tokenValidator;
-    }
 
     public AuthenticationFilterFactory(Class<Config> configClass, PathChecker pathChecker, TokenValidator tokenValidator) {
         super(configClass);
         this.pathChecker = pathChecker;
         this.tokenValidator = tokenValidator;
     }
+
 
     /**
      * Метод, который определяет логику фильтра, проверяя, является ли путь запроса защищенным

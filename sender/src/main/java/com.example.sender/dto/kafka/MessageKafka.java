@@ -8,9 +8,10 @@ import com.example.sender.model.NotificationState;
 import java.util.Map;
 
 /**
- *
+ * Record-класс, представляющий сообщение, которое будет отправлено в Kafka для обработки уведомления.
  */
 public record MessageKafka(
+
         Long id, // Уникальный идентификатор уведомления
         NotificationChannel channel, // Тип уведомления
         String credential, // Учетные данные получателя уведомления.

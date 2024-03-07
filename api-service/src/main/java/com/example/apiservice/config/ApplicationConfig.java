@@ -49,11 +49,11 @@ public class ApplicationConfig {
     }
 
     /**
-     * Метод определяет бин RestOperations для выполнения HTTP-запросов и получения ответов.
-     * @return RestOperations
+     * Метод определяет бин RestTemplate для выполнения HTTP-запросов и получения ответов.
+     * @return RestTemplate
      */
     @Bean
-    public RestOperations restOperationsTemplate() {
+    public RestTemplate restOperationsTemplate() {
         return new RestTemplate();
     }
 }
