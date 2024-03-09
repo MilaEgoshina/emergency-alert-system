@@ -1,0 +1,33 @@
+server:
+  port: 0
+
+spring:
+  application:
+    name: sender
+  kafka:
+    bootstrap-servers: localhost:9092
+    topics:
+      notifications:
+        email: email-notification
+        phone: phone-notification
+        telegram: telegram-notification
+
+services:
+  notification: message-service
+
+notification:
+  maxRetryAttempts: 3
+  services:
+    telegram:
+      token:
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+  instance:
+    leaseRenewalIntervalInSeconds: 1
+    leaseExpirationDurationInSeconds: 1
+    metadataMap:
+      instanceId: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+    instanceId: ${spring.application.name}:${spring.application.instance_id:${random.value}}

@@ -18,31 +18,43 @@ import java.util.concurrent.ThreadLocalRandom;
 @Component
 public class MessageListener {
 
-    private final TelegramNotificationService messagingService;
-    private final NotificationServiceClient notificationServiceClient;
+    private final TelegramNotificationService messagingService; //сервис для отправки сообщений
+    private final NotificationServiceClient notificationServiceClient; //клиент для обновления статуса сообщений
 
     private final Random random = new Random();
 
     @Value("${notification.maxRetryAttempts}")
-    private int maxRetryAttempts;
+    private int maxRetryAttempts; // максимальное количество попыток повторной отправки уведомления.
 
+
+    /**
+     * Метод - слушатель для топика телеграм-уведомлений.
+     * @param message представляет полученное сообщение - Kafka.
+     */
     @KafkaListener(
+            // метод будет прослушивать сообщения из темы Kafka, указанной в атрибуте topics
             topics = "#{'${spring.kafka.topics.notifications.telegram}'}",
             groupId = "emergency",
+            // фабрика контейнеров kafkaListenerContainerFactory для создания контейнера слушателя.
             containerFactory = "kafkaListenerContainerFactory"
     )
     private void consumeTelegramNotification(MessageKafka message) {
+        // регистрация полученного сообщения или уведомления в журнале с помощью вспомогательного метода
         logNotification(message);
         Long clientId = message.clientId();
         Long notificationId = message.id();
 
+        // проверяем, превышает ли количество попыток повторной отправки уведомления максимальное количество попыток повторной отправки
         if (message.retryAttempts() >= maxRetryAttempts) {
             notificationServiceClient.markNotificationAsError(clientId, notificationId);
-        } else if (shouldSimulateError()) {
+        } // вызывается вспомогательный метод для случайного определения, следует ли имитировать ошибку при отправке уведомления.
+        else if (shouldSimulateError()) {
             notificationServiceClient.markNotificationAsResending(clientId, notificationId);
-        } else {
+        } // если не имитируется ошибка, из сообщения извлекаются данные получателя (recipient) и шаблона (template)
+        else {
             String recipient = message.credential();
             TemplateHistoryResponse template = message.template();
+            // отправка сообщения (уведомления)
             boolean sent = messagingService.sendNotification(recipient, template);
             if (sent) {
                 notificationServiceClient.markNotificationAsSent(clientId, notificationId);
@@ -104,6 +116,10 @@ public class MessageListener {
         }
     }
 
+    /**
+     * Метод для логирования информации об уведомлении.
+     * @param message представляет полученное сообщение - Kafka.
+     */
     private void logNotification(MessageKafka message) {
         log.info(
                 "Received {} notification for '{}', status={}, retryAttempts={}",
