@@ -5,25 +5,25 @@ import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-/*@Data
+@Data
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
 @Entity
 @Table(
-        name = "Recipients",
+        name = "recipients",
         uniqueConstraints = {
-                @UniqueConstraint(name = "UniqueClientAndEmail", columnNames = {"clientId", "email"}),
-                @UniqueConstraint(name = "UniqueClientAndTelegram", columnNames = {"clientId", "telegramId"}),
-                @UniqueConstraint(name = "UniqueClientAndPhoneNumber", columnNames = {"clientId", "phoneNumber"})
+                @UniqueConstraint(name = "recipients_unq_clientId-email", columnNames = {"clientId", "email"}),
+                @UniqueConstraint(name = "recipients_unq_clientId-telegramId", columnNames = {"clientId", "telegramId"}),
+                @UniqueConstraint(name = "recipients_unq_clientId-phoneNumber", columnNames = {"clientId", "phoneNumber"})
         },
         indexes = {
-                @Index(name = "IndexEmail", columnList = "email")
+                @Index(name = "recipients_idx_email", columnList = "email")
         }
 )
 public class RecipientEntity implements BaseEntity<Long> {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -31,7 +31,7 @@ public class RecipientEntity implements BaseEntity<Long> {
     private Long clientId;
 
     private String name;
-    private LocationData locationData;
+    private LocationData geolocation;
 
     @Column(nullable = false)
     private String email;
@@ -46,26 +46,26 @@ public class RecipientEntity implements BaseEntity<Long> {
             cascade = CascadeType.ALL,
             orphanRemoval = true
     )
-    private List<TemplateIdEntity> templateIds = new ArrayList<>();
+    private List<TemplateEntity> templateIds = new ArrayList<>();
 
-    public RecipientEntity linkToClient(Long clientId) {
+    public RecipientEntity addClient(Long clientId) {
         setClientId(clientId);
         return this;
     }
 
-    public void registerTemplate(Long templateId) {
+    public void addTemplate(Long templateId) {
         templateIds.add(
-                TemplateEntityId.builder()
+                TemplateEntity.builder()
                         .templateId(templateId)
-                        .recipient(this)
+                        .recipientEntity(this)
                         .build()
         );
     }
 
-    public RecipientEntity deregisterTemplate(Long templateId) {
+    public RecipientEntity removeTemplate(Long templateId) {
         templateIds.removeIf(
-                template -> template.getTemplateId().equals(templateId)
+                template -> Objects.equals(template.getTemplateId(), templateId)
         );
         return this;
     }
-}*/
+}
