@@ -5,7 +5,7 @@ import org.springframework.context.annotation.PropertySource;
 
 @Configuration
 @PropertySource({
-        "classpath:${envTarget:errors}.properties"
+        "classpath:${envTarget:error}.properties"
 })
 
 public class PropertyConfiguration {
