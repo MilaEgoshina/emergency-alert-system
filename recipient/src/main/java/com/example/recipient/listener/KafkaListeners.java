@@ -40,7 +40,7 @@ public class KafkaListeners {
         if ("REMOVE".equals(kafkaTemplate.action())) {
             RecipientEntity recipient = recipientEntityRepository.findById(kafkaTemplate.recipientId()).orElse(null);
             if (recipient != null) {
-                recipient.removeTemplate(kafkaTemplate.templateId());
+                recipient.removeTemplateEntity(kafkaTemplate.templateId());
                 recipientEntityRepository.save(recipient);
             }
         } else if ("PERSISTS".equals(kafkaTemplate.action())) {

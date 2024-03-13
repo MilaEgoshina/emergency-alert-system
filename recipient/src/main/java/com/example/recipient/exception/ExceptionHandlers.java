@@ -40,7 +40,8 @@ public class ExceptionHandlers {
      * Метод обрабатывает пользовательское исключение RecipientEntityNotFoundException
      * @param e Экземпляр пользовательского исключения RecipientEntityNotFoundException.
      * @param request Объект запроса, предоставленный Spring MVC.
-     * @return Возвращает ответ HTTP со статусом 404 (не найдено).
+     * @return Возвращает объект ErrorEntityResponse с сообщением об ошибке, описанием ошибки, кодом ошибки,
+     * меткой времени ошибки и отправляет ответ HTTP-запроса со статусом 404 (не найдено).
      */
     @ExceptionHandler({
             RecipientEntityNotFoundException.class,
@@ -53,7 +54,8 @@ public class ExceptionHandlers {
      * Метод обрабатывает пользовательское исключение RecipientEntityRegistrationError
      * @param e Экземпляр пользовательского исключения RecipientEntityRegistrationError
      * @param request Объект запроса, предоставленный Spring MVC
-     * @return Возвращает ответ HTTP со статусом 400 (Bad Request).
+     * @return Возвращает объект ErrorEntityResponse с сообщением об ошибке, описанием ошибки, кодом ошибки,
+     * меткой времени ошибки и отправляет ответ HTTP-запроса со статусом 400 (плохой запрос).
      */
     @ExceptionHandler({
             RecipientEntityRegistrationError.class,
@@ -63,10 +65,10 @@ public class ExceptionHandlers {
     }
 
     /**
-     * Метод используется для создания общего ответа на ошибку
+     * Метод используется для создания общего ответа на ошибку для исключений, которые не имеют специальных обработчиков.
      * @param e Экземпляр исключения Exception
-     * @param httpStatus Экземпляр HttpStatus
-     * @param request Объект запроса, предоставленный Spring MVC
+     * @param httpStatus код состояния HTTP
+     * @param request Объект запроса
      * @return возвращает объект ResponseEntity, который содержит ответ HTTP со статусом, соответствующим типу исключения,
      * и телом ответа
      */
