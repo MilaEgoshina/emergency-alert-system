@@ -1,4 +1,4 @@
-package com.example.rebalacer.client;
+package com.example.rebalacer.service;
 
 import com.example.rebalacer.dto.kafka.NotificationMessageKafka;
 import org.springframework.cloud.openfeign.FeignClient;
