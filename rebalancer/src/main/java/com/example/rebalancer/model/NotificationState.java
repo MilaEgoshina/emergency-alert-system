@@ -1,4 +1,4 @@
-package com.example.rebalacer.model;
+package com.example.rebalancer.model;
 
 /**
  * Класс - перечисление для обозначений различных состояний, в которых может находиться уведомление (notification).

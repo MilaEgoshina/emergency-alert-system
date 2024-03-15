@@ -1,4 +1,4 @@
-package com.example.rebalacer.dto.response;
+package com.example.rebalancer.dto.response;
 
 import lombok.Getter;
 

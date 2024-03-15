@@ -1,4 +1,4 @@
-package com.example.rebalacer.model;
+package com.example.rebalancer.model;
 
 public enum NotificationWay {
 

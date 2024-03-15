@@ -1,8 +1,8 @@
-package com.example.rebalacer.dto.kafka;
+package com.example.rebalancer.dto.kafka;
 
-import com.example.rebalacer.dto.response.ResponseEntity;
-import com.example.rebalacer.model.NotificationState;
-import com.example.rebalacer.model.NotificationWay;
+import com.example.rebalancer.dto.response.ResponseEntity;
+import com.example.rebalancer.model.NotificationState;
+import com.example.rebalancer.model.NotificationWay;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

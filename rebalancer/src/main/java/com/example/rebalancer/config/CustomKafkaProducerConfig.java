@@ -1,4 +1,4 @@
-package com.example.rebalacer.config;
+package com.example.rebalancer.config;
 
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.clients.producer.RoundRobinPartitioner;

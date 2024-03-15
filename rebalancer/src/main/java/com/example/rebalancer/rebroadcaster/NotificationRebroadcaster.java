@@ -1,7 +1,7 @@
-package com.example.rebalacer.rebroadcaster;
+package com.example.rebalancer.rebroadcaster;
 
-import com.example.rebalacer.dto.kafka.NotificationMessageKafka;
-import com.example.rebalacer.service.NotificationService;
+import com.example.rebalancer.dto.kafka.NotificationMessageKafka;
+import com.example.rebalancer.service.NotificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
