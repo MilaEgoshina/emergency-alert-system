@@ -1,12 +1,18 @@
 package com.example.messaging.mapper;
 
+import com.example.messaging.client.LinkShortenerClient;
+import com.example.messaging.client.MessageTemplateClient;
+import com.example.messaging.dto.kafka.MessageKafka;
 import com.example.messaging.dto.request.MessageRequest;
+import com.example.messaging.dto.response.MessageHistoryResponse;
 import com.example.messaging.dto.response.MessageResponse;
 import com.example.messaging.entity.Message;
+import com.example.messaging.entity.MessageLog;
 import org.mapstruct.Mapper;
 import org.mapstruct.Context;
-import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+
+import java.util.Map;
 
 /**
  *
@@ -16,25 +22,26 @@ public interface MessageMapper extends EntityMapper<Message, MessageRequest, Mes
 
     @Override
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "status", ignore = true)
-    @Mapping(target = "retryAttempts", ignore = true)
-    @Mapping(target = "createdAt", ignore = true)
-    @Mapping(target = "templateHistoryId", ignore = true)
+    @Mapping(target = "messageState", ignore = true)
+    @Mapping(target = "retryCount", ignore = true)
+    @Mapping(target = "createdOn", ignore = true)
+    @Mapping(target = "templateId", ignore = true)
     Message toEntity(MessageRequest messageRequest);
 
-    @Mapping(target = "template", expression = "java(templateClient.getTemplateHistory(notification.getClientId(), notification.getTemplateHistoryId()).getBody())")
-    NotificationResponse mapToResponse(Notification notification, @Context TemplateClient templateClient);
+    @Mapping(target = "template", expression = "java(messageTemplateClient.receiveMessageTemplateHistory(message.getSenderId(), message.getTemplateId()).getBody())")
+    MessageResponse toDTO(Message message, @Context MessageTemplateClient messageTemplateClient);
 
-    @Mapping(target = "template", expression = "java(templateClient.getTemplateHistory(notification.getClientId(), notification.getTemplateHistoryId()).getBody())")
-    @Mapping(target = "urlOptionMap", expression = "java(shortenerClient.generate(template.responseId()).getBody().urlOptionMap())")
-    NotificationKafka mapToKafka(Notification notification, @Context TemplateClient templateClient, @Context ShortenerClient shortenerClient);
+    @Mapping(target = "template", expression = "java(messageTemplateClient.receiveMessageTemplateHistory(message.getSenderId(), message.getTemplateId()).getBody())")
+    @Mapping(target = "linkOptions", expression = "java(shortenerClient.getShorterLink(template.responseId()).getBody().linkOptions())")
+    MessageKafka toKafka(Message message, @Context MessageTemplateClient messageTemplateClient,
+                            @Context LinkShortenerClient shortenerClient);
 
-    @Mapping(target = "urlOptionMap", expression = "java(urlOptionMap)")
-    NotificationKafka mapToKafka(NotificationResponse notificationResponse, @Context Map<String, String> urlOptionMap);
+    @Mapping(target = "linkOptions", expression = "java(linkOptions)")
+    MessageKafka toKafka(MessageResponse messageResponse, @Context Map<String, String> linkOptions);
 
     @Mapping(target = "id", ignore = true)
-    NotificationHistory mapToHistory(Notification notification);
+    MessageLog toHistory(Message message);
 
-    NotificationHistoryResponse mapToResponse(NotificationHistory notificationHistory);
+    MessageHistoryResponse toDTO(MessageLog messageLog);
 
 }

@@ -8,7 +8,7 @@ import java.util.Map;
 public record LinkResponse(
 
         Long linkId, // уникальный идентификатор ссылки.
-        Map<String, String> linkOptionMap //  словарь (отображение), где ключом является имя опции,
+        Map<String, String> linkOptions //  словарь (отображение), где ключом является имя опции,
         // а значением - значение этой опции для данной ссылки.
 ) {
 }

@@ -11,7 +11,7 @@ import java.util.List;
 public record MessageRecipientCollectionKafka(
 
         List<Long> recipientIds, // список идентификаторов получателей
-        MessageTemplateHistoryResponse messageTemplate, //шаблон уведомления
+        MessageTemplateHistoryResponse messageTemplateHistory, //шаблон уведомления
         Long senderId // идентификатор отправителя
 
 ) {
