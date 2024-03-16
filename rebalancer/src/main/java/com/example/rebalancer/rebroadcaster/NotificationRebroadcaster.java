@@ -39,7 +39,7 @@ public class NotificationRebroadcaster {
     @Value("${rebroadcaster.fetch-limit}")
     private Integer fetchLimit; // Лимит количества уведомлений, получаемых за раз.
 
-    private final NotificationService notificationService;
+    private final NotificationService notificationService; // сервис, который предоставляет метод для работы с уведомлениями.
 
     private final KafkaTemplate<String, NotificationMessageKafka> messageKafkaTemplate; // Шаблон Kafka для отправки сообщений.
 
@@ -50,6 +50,8 @@ public class NotificationRebroadcaster {
      */
     @Scheduled(fixedDelay  = 5000)
     private void rebroadcastNotifications() {
+
+        // возвращается список уведомлений NotificationMessageKafka, которые должны быть повторно отправлены.
         List<NotificationMessageKafka> notifications = notificationService.fetchNotificationsForRebalancing(
                 pendingThreshold, newThreshold, fetchLimit)
                 .getBody();

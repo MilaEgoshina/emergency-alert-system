@@ -16,16 +16,16 @@ spring:
           predicates:
             - Path=/security-service/api-docs/**
 
-        - id: notification-service
-          uri: lb://NOTIFICATION-SERVICE
+        - id: message-service
+          uri: lb://message-service
           predicates:
             - Path=/api/v1/notifications/**
           filters:
             - Authentication
-        - id: notification-service-docs
-          uri: lb://NOTIFICATION-SERVICE
+        - id: message-service-docs
+          uri: lb://message-service
           predicates:
-            - Path=/notification-service/api-docs/**
+            - Path=/message-service/api-docs/**
 
         - id: template-service
           uri: lb://TEMPLATE-SERVICE
@@ -38,16 +38,16 @@ spring:
           predicates:
             - Path=/template-service/api-docs/**
 
-        - id: recipient-service
-          uri: lb://RECIPIENT-SERVICE
+        - id: recipient
+          uri: lb://recipient
           predicates:
             - Path=/api/v1/recipients/**
           filters:
             - Authentication
-        - id: recipient-service-docs
-          uri: lb://RECIPIENT-SERVICE
+        - id: recipient-docs
+          uri: lb://recipient
           predicates:
-            - Path=/recipient-service/api-docs/**
+            - Path=/recipient/api-docs/**
 
         - id: file-service
           uri: lb://FILE-SERVICE
@@ -76,14 +76,14 @@ springdoc:
   swagger-ui:
     url: http://localhost:8080/v3/api-docs
     urls:
-      - name: notification-service
-        url: /notification-service/api-docs
-      - name: security-service
+      - name: message-service
+        url: /message-service/api-docs
+      - name: message-service
         url: /security-service/api-docs
       - name: template-service
         url: /template-service/api-docs
-      - name: recipient-service
-        url: /recipient-service/api-docs
+      - name: recipient
+        url: /recipient/api-docs
       - name: file-service
         url: /file-service/api-docs
       - name: url-shortener
