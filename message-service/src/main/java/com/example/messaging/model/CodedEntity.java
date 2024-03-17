@@ -7,5 +7,6 @@ package com.example.messaging.model;
  */
 public interface CodedEntity {
 
+    // метод должен возвращать уникальный строковый идентификатор для каждого значения перечисления
     String getIdentifier();
 }
