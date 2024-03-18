@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- *
+ * Интерфейс для выполнения запросов к базе данных для сущности Message.
  */
 public interface MessageRepository extends JpaRepository<Message, Long> {
 

@@ -22,11 +22,11 @@ public class ServiceInstanceTracker {
     private final Map<String, Integer> serviceInstanceCounts = new HashMap<>(); // для хранения количества экземпляров каждого сервиса.
 
     /**
-     * Метод, который подсчитывает количество экземпляров конкретного сервиса по его имени.
+     * Метод, который подсчитывает количество запущенных экземпляров конкретного сервиса по его имени.
      * @param serviceName имя сервиса
      * @return возвращает количество экземпляров конкретного сервиса.
      */
-    public Integer getInstanceCount(String serviceName) {
+    public Integer getRunningInstanceCount(String serviceName) {
         serviceInstanceCounts.putIfAbsent(serviceName, retrieveInstanceCount(serviceName));
         return serviceInstanceCounts.get(serviceName);
     }
