@@ -21,7 +21,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class TelegramNotificationService {
 
-    @Value("${telegram.api.key}")
+    @Value("${message.services.telegram.api.key}")
     private String apiKey;
 
     private final TelegramApiInterface telegramApiClient;

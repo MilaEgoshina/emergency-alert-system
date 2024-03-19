@@ -7,19 +7,21 @@ spring:
   kafka:
     bootstrap-servers: localhost:9092
     topics:
-      notifications:
+      messages:
         email: email-notification
         phone: phone-notification
         telegram: telegram-notification
 
 services:
-  notification: message-service
+  message: message-service
 
-notification:
+message:
   maxRetryAttempts: 3
   services:
     telegram:
-      token:
+      api:
+        key:
+
 
 eureka:
   client:

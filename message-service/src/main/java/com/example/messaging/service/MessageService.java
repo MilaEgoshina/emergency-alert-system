@@ -46,12 +46,12 @@ public class MessageService {
 
     //название темы (topic) в Apache Kafka, на которую будут отправляться сообщения с информацией о списках получателей
     // (recipients) для рассылки уведомлений.
-    @Value("${spring.kafka.topics.splitter}")
+    @Value("${spring.kafka.topics.separator}")
     private String recipientCollectionDistributionTopic;
 
     /**
      * Метод используется для распределения уведомлений на основе шаблона и списка получателей.
-     * @param clientId идентификатор клиента
+     * @param clientId идентификатор отправителя сообщения
      * @param templateId идентификатор шаблона
      * @return в случае успешной отправки возвращается строка, уведомляющая пользователя о том, что сообщения были доставлены.
      */
@@ -107,8 +107,9 @@ public class MessageService {
 
     /**
      * Метод используется для получения списка уведомлений, которые должны быть переданы на переработку(повторную отправку).
-     * @param pendingSec время сообщения в процессе ожидания отправки
-     * @param newSec время на новую отправку сообщения
+     * @param pendingSec время в секундах для поиска уведомлений в состоянии ожидания.
+     * @param newSec  время в секундах для поиска новых уведомлений.
+     * @param size максимальное количество уведомлений для возврата.
      * @return возвращает список объектов MessageKafka, которые используются для отправки сообщений через Kafka.
      */
     public List<MessageKafka> receiveMessagesForRebalancing(Long pendingSec, Long newSec, Integer size) {
@@ -125,20 +126,73 @@ public class MessageService {
                 // этих уведомлений в объекты MessageKafka
                 .toList();
     }
+    public MessageHistoryResponse setMessageAsDelivered(Long clientId, Long messageId) {
+        return setMessageAsExecutedWithState(clientId, messageId, MessageState.DELIVERED);
+    }
 
+    public MessageHistoryResponse setMessageAsFailed(Long clientId, Long messageId) {
+        return setMessageAsExecutedWithState(clientId, messageId, MessageState.FAILED);
+    }
+
+    public MessageHistoryResponse setMessageAsInvalid(Long clientId, Long messageId) {
+        return setMessageAsExecutedWithState(clientId, messageId, MessageState.INVALID);
+    }
+
+    /**
+     * Метод, который используется для обновления статуса уведомления на IN_PROGRESS.
+     * @param clientId идентификатор отправителя сообщения
+     * @param messageId идентификатор сообщения
+     * @return объект MessageResponse для ответа на запрос о предоставлении информации об отправленных сообщениях.
+     */
+    public MessageResponse setMessageAsInProgress(Long clientId, Long messageId) {
+        return messageRepository.getByIdAndSenderId(messageId, clientId)
+                .map(message -> message.setMessageState(MessageState.IN_PROGRESS))
+                .map(messageRepository::saveAndFlush)
+                .map(message -> messageMapper.toResponse(message, messageTemplateClient)) //преобразование обновленного
+                // сообщения в MessageResponse
+                .orElseThrow(() -> new MessageNotFoundException(
+                        sourceService.getMessage("message.not_found", messageId, clientId)
+                ));
+    }
+
+    /**
+     * Метод, который используется для обновления статуса уведомления на RESEND_QUEUED.
+     * @param clientId идентификатор отправителя сообщения
+     * @param messageId идентификатор сообщения
+     * @return объект MessageResponse для ответа на запрос о предоставлении информации об отправленных сообщениях.
+     */
+    public MessageResponse setMessageAsResending(Long clientId, Long messageId) {
+        return messageRepository.getByIdAndSenderId(messageId, clientId)
+                .map(Message::incrementRetryCount)
+                .map(message -> message.setMessageState(MessageState.RESEND_QUEUED))
+                .map(messageRepository::saveAndFlush)
+                .map(message -> messageMapper.toResponse(message, messageTemplateClient))
+                .orElseThrow(() -> new MessageNotFoundException(
+                        sourceService.getMessage("message.not_found", messageId, clientId)
+                ));
+    }
+
+    /**
+     * Метод, который используется для обновления статуса уведомления на заданный статус.
+     * @param clientId идентификатор отправителя сообщения
+     * @param messageId идентификатор сообщения
+     * @param state заданный статус сообщения
+     * @return возвращает объект MessageHistoryResponse для ответа на запрос об истории отправленных сообщений
+     */
     private MessageHistoryResponse setMessageAsExecutedWithState(
             Long clientId, Long messageId,
             MessageState state
     ) {
-        return messageRepository.getByIdAndSenderId(messageId, clientId)
+        return messageRepository.getByIdAndSenderId(messageId, clientId) //поиск сообщения по его id и clientId
                 .map(message -> {
-                    messageRepository.delete(message);
+                    messageRepository.delete(message); // удаление найденного сообщения из БД
                     return message;
                 })
                 .map(messageMapper::toHistory)
-                .map(messageHistory -> messageHistory.setMessageState(state))
-                .map(messageHistoryRepository::saveAndFlush)
-                .map(messageMapper::toResponse)
+                .map(messageHistory -> messageHistory.setMessageState(state)) //обновление статуса на заданный в аргументах метода
+                .map(messageHistoryRepository::saveAndFlush) // сохранение обновленного статуса и сообщения в БД
+                .map(messageMapper::toResponse) // преобразование в объект MessageHistoryResponse для хранения истории об отправки
+                // сообщений и их состояний
                 .orElseThrow(() -> new MessageNotFoundException(
                         sourceService.getMessage("message.not_found", messageId, clientId)
                 ));

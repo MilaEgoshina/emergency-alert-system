@@ -7,7 +7,7 @@ spring:
   kafka:
     bootstrap-servers: localhost:9092
     topics:
-      notifications:
+      messages:
         email: email - topic
         phone: phone - topic
         telegram: telegram - topic
@@ -18,7 +18,7 @@ rebroadcaster:
   fetch-limit: 15
 
 services:
-  notification: message-service
+  message: message-service
 
 eureka:
   client:

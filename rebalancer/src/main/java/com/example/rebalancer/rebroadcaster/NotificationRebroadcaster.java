@@ -21,13 +21,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class NotificationRebroadcaster {
 
-    @Value("${spring.kafka.topics.notifications.phone}")
+    @Value("${spring.kafka.topics.messages.phone}")
     private String phoneNotificationTopic; // Поле для хранения темы Kafka для отправки уведомлений на телефон.
 
-    @Value("${spring.kafka.topics.notifications.email}")
+    @Value("${spring.kafka.topics.messages.email}")
     private String emailNotificationTopic; // Поле для хранения темы Kafka для отправки уведомлений на электронную почту.
 
-    @Value("${spring.kafka.topics.notifications.telegram}")
+    @Value("${spring.kafka.topics.messages.telegram}")
     private String messengerNotificationTopic; // Поле для хранения темы Kafka для отправки уведомлений в телеграмм.
 
     @Value("${rebroadcaster.pending-threshold}")

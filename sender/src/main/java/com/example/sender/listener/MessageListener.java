@@ -23,7 +23,7 @@ public class MessageListener {
 
     private final Random random = new Random();
 
-    @Value("${notification.maxRetryAttempts}")
+    @Value("${message.maxRetryAttempts}")
     private int maxRetryAttempts; // максимальное количество попыток повторной отправки уведомления.
 
 
@@ -33,7 +33,7 @@ public class MessageListener {
      */
     @KafkaListener(
             // метод будет прослушивать сообщения из темы Kafka, указанной в атрибуте topics
-            topics = "#{'${spring.kafka.topics.notifications.telegram}'}",
+            topics = "#{'${spring.kafka.topics.messages.telegram}'}",
             groupId = "emergency",
             // фабрика контейнеров kafkaListenerContainerFactory для создания контейнера слушателя.
             containerFactory = "kafkaListenerContainerFactory"
@@ -65,7 +65,7 @@ public class MessageListener {
     }
 
     @KafkaListener(
-            topics = "#{'${spring.kafka.topics.notifications.email}'}",
+            topics = "#{'${spring.kafka.topics.messages.email}'}",
             groupId = "emergency",
             containerFactory = "kafkaListenerContainerFactory"
     )
@@ -91,7 +91,7 @@ public class MessageListener {
     }
 
     @KafkaListener(
-            topics = "#{'${spring.kafka.topics.notifications.sms}'}",
+            topics = "#{'${spring.kafka.topics.messages.phone}'}",
             groupId = "emergency",
             containerFactory = "kafkaListenerContainerFactory"
     )

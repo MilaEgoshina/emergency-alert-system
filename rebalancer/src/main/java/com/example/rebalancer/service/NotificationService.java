@@ -13,7 +13,7 @@ import java.util.List;
  * Интерфейс, который описывает контракт для вызова удаленного сервиса, отвечающего за получение уведомлений
  * для перебалансировки (rebalancing).
  */
-@FeignClient("${services.notification}")
+@FeignClient("${services.message}")
 public interface NotificationService {
 
     /**
@@ -24,7 +24,7 @@ public interface NotificationService {
      * @return возвращает ResponseEntity<List<NotificationMessageKafka>>, что означает, что ожидается получить HTTP-ответ,
      * содержащий список объектов NotificationMessageKafka.
      */
-    @GetMapping("/api/v1/notifications/")
+    @GetMapping("/api/v1/messages/")
     ResponseEntity<List<NotificationMessageKafka>> fetchNotificationsForRebalancing(
             @RequestParam(name = "pending", required = false, defaultValue = "10") Long pendingThreshold,
             @RequestParam(name = "new", required = false, defaultValue = "10") Long newThreshold,

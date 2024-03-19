@@ -28,7 +28,7 @@ public class KafkaListeners {
     @KafkaListener(
             topics = "#{ '${spring.kafka.topics.recipient-update}' }",
             groupId = "emergency",
-            containerFactory = "listenerContainerFactory"
+            containerFactory = "kafkaListenerContainerFactory"
     )
 
     /**
