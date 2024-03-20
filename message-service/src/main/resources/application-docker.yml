@@ -1,7 +1,9 @@
 server:
-  port: 1007
+  port: 1000
 
 spring:
+  datasource:
+    url: jdbc:postgresql://message-service-postgres:5432/message
   kafka:
     bootstrap-servers: broker:29092
 

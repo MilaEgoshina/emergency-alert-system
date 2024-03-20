@@ -48,7 +48,7 @@ public class MesageKafkaListeners {
 
 
     /**
-     *
+     * Метод, который отправляет сообщения через различные каналы с использованием вспомогательного метода sendMessageByCredential.
      * @param recipientCollectionKafka объект MessageRecipientCollectionKafka, который содержит список идентификаторов получателей,
      * идентификатор клиента и информацию о шаблоне уведомления.
      */
