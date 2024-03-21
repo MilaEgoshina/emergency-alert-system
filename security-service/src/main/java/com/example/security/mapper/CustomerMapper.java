@@ -22,7 +22,7 @@ public interface CustomerMapper {
 
     /**
      * Метод определяет правила преобразования объекта типа SecurityServiceRequest в объект типа Customer.
-     * @param request
+     * @param securityRequest запрос на передачу данных при выполнении операция аутентификации.
      * @param encoder внедряет PasswordEncoder для шифрования пароля.
      * @return возвращает новый объект типа Customer, применяя указанные правила преобразования.
      */
@@ -31,5 +31,5 @@ public interface CustomerMapper {
     // CustomerRole.CUSTOMER при преобразовании.
     @Mapping(target = "password", expression = "java(encoder.encode(request.getPassword()))") // устанавливает значение поля
     // password, применяя шифрование пароля с помощью PasswordEncoder.
-    Customer toEntity(SecurityServiceRequest request, @Context PasswordEncoder encoder);
+    Customer toEntity(SecurityServiceRequest securityRequest, @Context PasswordEncoder encoder);
 }
