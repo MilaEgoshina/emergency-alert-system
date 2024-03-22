@@ -16,7 +16,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Long>{
     /**
      * Метод для поиска Customer по адресу электронной почты.
      * @param email адрес электронной почты клиента.
-     * @return возвращает объект типа Optional, который может содержать AccessTokenEntity или быть пустым, если объект не найден.
+     * @return возвращает объект типа Optional, который может содержать AuthTokenEntity или быть пустым, если объект не найден.
      */
     Optional<Customer> getByEmail(String email);
 }

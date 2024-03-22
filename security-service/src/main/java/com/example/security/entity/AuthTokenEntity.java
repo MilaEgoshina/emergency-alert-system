@@ -15,14 +15,14 @@ import static com.example.security.model.AuthTokenType.ACCESS_TOKEN;
 @AllArgsConstructor
 @Entity
 @Table(name = "access_tokens")
-public class AccessTokenEntity implements BaseEntity<Long>{
+public class AuthTokenEntity implements BaseEntity<Long>{
 
     @Id
     @GeneratedValue
     public Long Id;
 
     @OneToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "customer_id")
     public Customer customer;
 
     @Enumerated(EnumType.STRING)

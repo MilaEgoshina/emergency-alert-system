@@ -5,8 +5,8 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 /**
- * Класс - record, который используется для передачи данных при выполнении операций в сервисе безопасности
- * (при регистрации или аутентификации пользователя).
+ * Класс - record, который предназначен для упрощения передачи и хранения данных,
+ * связанных с безопасностью (электронная почта и пароль).
  */
 public record SecurityServiceRequest(
 

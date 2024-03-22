@@ -31,5 +31,5 @@ public interface CustomerMapper {
     // CustomerRole.CUSTOMER при преобразовании.
     @Mapping(target = "password", expression = "java(encoder.encode(request.getPassword()))") // устанавливает значение поля
     // password, применяя шифрование пароля с помощью PasswordEncoder.
-    Customer toEntity(SecurityServiceRequest securityRequest, @Context PasswordEncoder encoder);
+    Customer mapRequestToClientEntity(SecurityServiceRequest securityRequest, @Context PasswordEncoder encoder);
 }
