@@ -24,9 +24,8 @@ springdoc:
     path: /security-service/api-docs
 
 security:
-  jwt:
-    key:
-    prefix: 'Bearer '
+  secret-key:
+  token-prefix: 'Bearer '
 
 eureka:
   client:

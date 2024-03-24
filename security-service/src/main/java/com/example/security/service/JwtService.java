@@ -24,10 +24,10 @@ import static io.jsonwebtoken.SignatureAlgorithm.HS256;
 @RequiredArgsConstructor
 public class JwtService {
 
-    @Value("${app.security.secret-key}")
+    @Value("${security.secret-key}")
     private String secretKey; // значение ключа, которое используется для подписи и проверки подлинности JWT.
 
-    @Value("${app.security.token-prefix}")
+    @Value("${security.token-prefix}")
     public String tokenPrefix; // префикс, который используется для извлечения JWT из заголовка запроса Authorization.
 
     /**

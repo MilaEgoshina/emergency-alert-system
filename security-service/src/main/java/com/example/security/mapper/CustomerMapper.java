@@ -26,7 +26,7 @@ public interface CustomerMapper {
      * @param encoder внедряет PasswordEncoder для шифрования пароля.
      * @return возвращает новый объект типа Customer, применяя указанные правила преобразования.
      */
-    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "customer_id", ignore = true)
     @Mapping(target = "role", expression = "java(CustomerRole.CUSTOMER)") // устанавливает значение поля role в
     // CustomerRole.CUSTOMER при преобразовании.
     @Mapping(target = "password", expression = "java(encoder.encode(request.getPassword()))") // устанавливает значение поля
