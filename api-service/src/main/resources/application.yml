@@ -27,16 +27,16 @@ spring:
           predicates:
             - Path=/message-service/api-docs/**
 
-        - id: template-service
-          uri: lb://TEMPLATE-SERVICE
+        - id: templates
+          uri: lb://TEMPLATES
           predicates:
             - Path=/api/v1/templates/**
           filters:
             - Authentication
-        - id: template-service-docs
-          uri: lb://TEMPLATE-SERVICE
+        - id: templates-docs
+          uri: lb://TEMPLATES
           predicates:
-            - Path=/template-service/api-docs/**
+            - Path=/templates/api-docs/**
 
         - id: recipient
           uri: lb://recipient
@@ -60,14 +60,14 @@ spring:
           predicates:
             - Path=/file-service/api-docs/**
 
-        - id: url-shortener
-          uri: lb://URL-SHORTENER
+        - id: link-shortener
+          uri: lb://LINK-SHORTENER
           predicates:
             - Path=/api/v1/responses/**
-        - id: url-shortener-docs
-          uri: lb://URL-SHORTENER
+        - id: link-shortener-docs
+          uri: lb://LINK-SHORTENER
           predicates:
-            - Path=/url-shortener/api-docs/**
+            - Path=/link-shortener/api-docs/**
 
 # http://localhost:8080/webjars/swagger-ui/index.html
 springdoc:
@@ -80,14 +80,14 @@ springdoc:
         url: /message-service/api-docs
       - name: message-service
         url: /security-service/api-docs
-      - name: template-service
-        url: /template-service/api-docs
+      - name: templates
+        url: /templates/api-docs
       - name: recipient
         url: /recipient/api-docs
       - name: file-service
         url: /file-service/api-docs
-      - name: url-shortener
-        url: /url-shortener/api-docs
+      - name: link-shortener
+        url: /link-shortener/api-docs
 
 eureka:
   client:

@@ -30,8 +30,8 @@ spring:
 
 services:
   recipient: recipient
-  template: template-service
-  shortener: url-shortener
+  template: templates
+  shortener: link-shortener
 
 springdoc:
   api-docs:
