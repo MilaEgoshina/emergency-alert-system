@@ -8,7 +8,7 @@ include 'message-service'
 
 include 'api-service'
 include 'discovery-server'
-include 'telegram-bot-server'
+include 'bot-service'
 
 include 'sender'
 include 'rebalancer'
