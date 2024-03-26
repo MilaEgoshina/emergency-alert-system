@@ -12,4 +12,4 @@ include 'telegram-bot-server'
 
 include 'sender'
 include 'rebalancer'
-include 'url-shortener'
+include 'link-shortener'
