@@ -2,5 +2,5 @@ server:
   port: 0
 
 bot:
-  name: EmergencyNotificationSystemBot
+  name: EmergencyNotificationSystem
   token:
