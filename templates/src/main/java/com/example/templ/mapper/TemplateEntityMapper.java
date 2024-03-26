@@ -32,7 +32,7 @@ public interface TemplateEntityMapper extends EntityMapper<TemplateEntity, Templ
             target = "recipientIds", // поле recipientIds в TemplateEntityResponse
 
             // содержит выражение, которое будет выполнено для получения значения поля recipientIds.
-            expression = "java(recipientClient.getRecipientResponseListByTemplateId(templateEntity.getClientId(), template.getId()).getBody())"
+            expression = "java(recipientClient.getRecipientResponseListByTemplateId(templateEntity.getClientId(), templateEntity.getId()).getBody())"
 
     )
     TemplateEntityResponse toResponse(TemplateEntity templateEntity, @Context RecipientEntityClient recipientClient);
