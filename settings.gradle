@@ -4,7 +4,7 @@ include 'security-service'
 include 'recipient'
 include 'templates'
 include 'message-service'
-include 'file-service'
+//include 'file-service'
 
 include 'api-service'
 include 'discovery-server'
