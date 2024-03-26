@@ -1,6 +1,6 @@
 package com.example.templ.client;
 
-import com.example.templ.dto.response.RecipientResponse;
+import com.example.templ.dto.response.RecipientEntityResponse;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,11 +21,11 @@ public interface RecipientEntityClient {
      *
      * @param clientId идентификатор клиента, который должен быть передан в заголовке HTTP-запроса.
      * @param recipientId идентификатор получателя, который должен быть передан в пути URL-запроса.
-     * @return возвращает ResponseEntity<RecipientResponse>, что означает, что метод должен получить от удаленного сервиса
-     * ответ в виде объекта RecipientResponse, обернутого в ResponseEntity.
+     * @return возвращает ResponseEntity<RecipientEntityResponse>, что означает, что метод должен получить от удаленного сервиса
+     * ответ в виде объекта RecipientEntityResponse, обернутого в ResponseEntity.
      */
     @GetMapping(value = "/api/v1/recipients/{id}")
-    ResponseEntity<RecipientResponse> getRecipientById(
+    ResponseEntity<RecipientEntityResponse> getRecipientById(
             @RequestHeader Long clientId,
             @PathVariable("id") Long recipientId
     );
@@ -35,11 +35,11 @@ public interface RecipientEntityClient {
      *
      * @param clientId идентификатор клиента, который должен быть передан в заголовке HTTP-запроса.
      * @param templateId идентификатор шаблона, по которому нужно получить список получателей.
-     * @return возвращает ResponseEntity<List<RecipientResponse>>, что означает, что метод должен получить от удаленного
-     * сервиса ответ в виде списка объектов RecipientResponse, обернутого в ResponseEntity
+     * @return возвращает ResponseEntity<List<RecipientEntityResponse>>, что означает, что метод должен получить от удаленного
+     * сервиса ответ в виде списка объектов RecipientEntityResponse, обернутого в ResponseEntity
      */
     @GetMapping(value = "/api/v1/recipients/template/{id}")
-    ResponseEntity<List<RecipientResponse>> getRecipientResponseListByTemplateId(
+    ResponseEntity<List<RecipientEntityResponse>> getRecipientResponseListByTemplateId(
             @RequestHeader Long clientId,
             @PathVariable("id") Long templateId
     );

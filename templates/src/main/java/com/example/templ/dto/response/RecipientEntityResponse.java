@@ -3,7 +3,7 @@ package com.example.templ.dto.response;
 import lombok.Builder;
 
 @Builder
-public record RecipientResponse(
+public record RecipientEntityResponse(
 
         Long id,
         String name,

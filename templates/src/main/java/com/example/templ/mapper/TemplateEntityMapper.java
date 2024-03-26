@@ -13,12 +13,25 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface TemplateEntityMapper extends EntityMapper<TemplateEntity, TemplateEntityRequest, TemplateEntityResponse>{
 
+    // метод преобразует объект TemplateEntity в объект TemplateHistoryEntity, который представляет историю изменений шаблона.
     TemplateHistoryEntity toTemplateHistory(TemplateEntity templateEntity);
 
+    // метод преобразует объект TemplateHistoryEntity в объект TemplateHistoryEntityResponse, который используется для передачи
+    // данных истории изменений шаблона на клиентскую сторону.
     TemplateHistoryEntityResponse toTemplateHistoryResponse(TemplateHistoryEntity historyEntity);
 
-    @Mapping(
-            target = "recipientIds",
+    /**
+     * Метод для преобразования объекта класса TemplateEntity в объект класса TemplateEntityResponse, добавляя поле recipientIds
+     * с помощью информации, полученной с помощью клиента RecipientEntityClient.
+     *
+     * @param templateEntity объект класса TemplateEntity - шаблона сообщения.
+     * @param recipientClient объект интерфейса RecipientClient для преобразования объектов.
+     * @return преобразованный объект класса TemplateEntityResponse.
+     */
+    @Mapping( // определяем маппинг между полями объектов TemplateEntityResponse и TemplateEntity
+            target = "recipientIds", // поле recipientIds в TemplateEntityResponse
+
+            // содержит выражение, которое будет выполнено для получения значения поля recipientIds.
             expression = "java(recipientClient.getRecipientResponseListByTemplateId(templateEntity.getClientId(), template.getId()).getBody())"
 
     )

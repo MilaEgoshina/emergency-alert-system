@@ -8,6 +8,6 @@ public record TemplateEntityResponse(
         String templateTitle,
         String templateContent,
         String templateImage,
-        List<RecipientResponse> recipientIds
+        List<RecipientEntityResponse> recipientIds
 ) {
 }
