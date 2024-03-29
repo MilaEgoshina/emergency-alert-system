@@ -1,5 +1,6 @@
 package com.example.templ.integration;
 
+import com.example.templ.integration.IntegrationTestBase.*;
 import com.example.templ.builder.TemplateEntityJson;
 import com.example.templ.client.RecipientEntityClient;
 import com.example.templ.config.LinksEnums;
