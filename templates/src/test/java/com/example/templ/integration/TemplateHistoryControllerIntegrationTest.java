@@ -12,7 +12,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
-import com.example.templ.integration.IntegrationTestBase.*;
+import org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper;
+
+import java.io.IOException;
+
 import static com.example.templ.config.LinksEnums.*;
 import static com.example.templ.integration.TemplateControllerIntegrationTest.CLIENT_ID;
 import static com.example.templ.integration.TemplateControllerIntegrationTest.TEMPLATE;
@@ -113,5 +116,17 @@ public class TemplateHistoryControllerIntegrationTest {
                         jsonPath("$.recipientIds").isEmpty()
                 );
         return Long.valueOf(extractJsonValueByKey(result, "id"));
+    }
+
+    private String extractJsonValueByKey(ResultActions resultActions, String key) throws IOException {
+
+        return new ObjectMapper()
+                .readTree(
+                        resultActions.andReturn()
+                                .getResponse()
+                                .getContentAsString()
+                )
+                .at("/" + key)
+                .asText();
     }
 }
