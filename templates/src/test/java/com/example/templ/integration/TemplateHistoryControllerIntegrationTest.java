@@ -1,9 +1,8 @@
 package com.example.templ.integration;
 
-import com.example.templ.integration.IntegrationTestBase.*;
+
 import com.example.templ.builder.TemplateEntityJson;
 import com.example.templ.client.RecipientEntityClient;
-import com.example.templ.config.LinksEnums;
 import com.example.templ.mockstest.RecipientEntityClientMock;
 import com.example.templ.service.MessageService;
 import lombok.RequiredArgsConstructor;
@@ -13,7 +12,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 
-
+import com.example.templ.integration.IntegrationTestBase.*;
+import static com.example.templ.config.LinksEnums.*;
+import static com.example.templ.integration.TemplateControllerIntegrationTest.CLIENT_ID;
+import static com.example.templ.integration.TemplateControllerIntegrationTest.TEMPLATE;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -37,23 +39,23 @@ public class TemplateHistoryControllerIntegrationTest {
     @Test
     public void createTemplateHistoryTest() throws Exception {
         createTemplateHistoryNotFound(1L);
-        Long templateId = createTemplateCreated(TemplateControllerIntegrationTest.TEMPLATE);
-        createTemplateHistoryCreated(templateId, TemplateControllerIntegrationTest.TEMPLATE);
-        createTemplateHistoryCreated(templateId, TemplateControllerIntegrationTest.TEMPLATE);
+        Long templateId = createTemplateCreated(TEMPLATE);
+        createTemplateHistoryCreated(templateId, TEMPLATE);
+        createTemplateHistoryCreated(templateId, TEMPLATE);
     }
 
     @Test
     public void getTemplateHistoryTest() throws Exception {
         getTemplateHistoryNotFound(1L);
-        Long templateId = createTemplateCreated(TemplateControllerIntegrationTest.TEMPLATE);
-        createTemplateHistoryCreated(templateId, TemplateControllerIntegrationTest.TEMPLATE);
-        getTemplateHistoryOk(templateId, TemplateControllerIntegrationTest.TEMPLATE);
-        getTemplateHistoryOk(templateId, TemplateControllerIntegrationTest.TEMPLATE);
+        Long templateId = createTemplateCreated(TEMPLATE);
+        createTemplateHistoryCreated(templateId, TEMPLATE);
+        getTemplateHistoryOk(templateId, TEMPLATE);
+        getTemplateHistoryOk(templateId, TEMPLATE);
     }
 
     private void createTemplateHistoryCreated(Long templateId, TemplateEntityJson template) throws Exception {
-        mockMvc.perform(post(LinksEnums.CREATE_HISTORY.getLinks().formatted(templateId))
-                        .header("clientId",TemplateControllerIntegrationTest.CLIENT_ID))
+        mockMvc.perform(post(CREATE_HISTORY.getLinks().formatted(templateId))
+                        .header("clientId",CLIENT_ID))
                 .andExpectAll(
                         status().isCreated(),
                         jsonPath("$.id").exists(),
@@ -64,19 +66,19 @@ public class TemplateHistoryControllerIntegrationTest {
     }
 
     private void createTemplateHistoryNotFound(Long templateId) throws Exception {
-        mockMvc.perform(post(LinksEnums.CREATE_HISTORY.getLinks().formatted(templateId))
-                        .header("clientId", TemplateControllerIntegrationTest.CLIENT_ID))
+        mockMvc.perform(post(CREATE_HISTORY.getLinks().formatted(templateId))
+                        .header("clientId",CLIENT_ID))
                 .andExpectAll(
                         status().isNotFound(),
                         jsonPath("$.message").value(
-                                messageService.getMessage("template.not_found", templateId, TemplateControllerIntegrationTest.CLIENT_ID)
+                                messageService.getMessage("template.not_found", templateId, CLIENT_ID)
                         )
                 );
     }
 
     private void getTemplateHistoryOk(Long templateId, TemplateEntityJson template) throws Exception {
-        mockMvc.perform(get(LinksEnums.GET_HISTORY.getLinks().formatted(templateId))
-                        .header("clientId", TemplateControllerIntegrationTest.CLIENT_ID))
+        mockMvc.perform(get(GET_HISTORY.getLinks().formatted(templateId))
+                        .header("clientId", CLIENT_ID))
                 .andExpectAll(
                         status().isOk(),
                         jsonPath("$.id").exists(),
@@ -87,19 +89,19 @@ public class TemplateHistoryControllerIntegrationTest {
     }
 
     private void getTemplateHistoryNotFound(Long historyId) throws Exception {
-        mockMvc.perform(get(LinksEnums.GET_HISTORY.getLinks().formatted(historyId))
-                        .header("clientId", TemplateControllerIntegrationTest.CLIENT_ID))
+        mockMvc.perform(get(GET_HISTORY.getLinks().formatted(historyId))
+                        .header("clientId", CLIENT_ID))
                 .andExpectAll(
                         status().isNotFound(),
                         jsonPath("$.message").value(
-                                messageService.getMessage("history.not_found", historyId, TemplateControllerIntegrationTest.CLIENT_ID)
+                                messageService.getMessage("history.not_found", historyId,CLIENT_ID)
                         )
                 );
     }
 
     private Long createTemplateCreated(TemplateEntityJson template) throws Exception {
-        ResultActions result = mockMvc.perform(post(LinksEnums.CREATE_TEMPLATE.getLinks())
-                        .header("clientId", TemplateControllerIntegrationTest.CLIENT_ID)
+        ResultActions result = mockMvc.perform(post(CREATE_TEMPLATE.getLinks())
+                        .header("clientId", CLIENT_ID)
                         .content(template.convertToJson())
                         .contentType(APPLICATION_JSON))
                 .andExpectAll(
