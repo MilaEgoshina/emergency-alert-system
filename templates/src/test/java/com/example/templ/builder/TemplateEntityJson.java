@@ -1,5 +1,8 @@
 package com.example.templ.builder;
 
+/**
+ * Класс для создания JSON-объектов, содержащих данные для написания нового шаблона.
+ */
 public record TemplateEntityJson(
 
         String title,
