@@ -1,0 +1,15 @@
+spring:
+  datasource:
+    username: test12345
+    password: test12345
+  jpa:
+    properties.hibernate:
+      ddl-auto: update
+    show-sql: true
+  kafka:
+    topics:
+      template-update: template-updated
+
+eureka:
+  client:
+    enabled: false
