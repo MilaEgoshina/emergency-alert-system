@@ -5,21 +5,21 @@ package com.example.templ.builder;
  */
 public record TemplateEntityJson(
 
-        String title,
-        String content
+        String templateTitle,
+        String templateContent
 ) implements TemplateEntityTest{
 
     private static final String TEMPLATE = """
             {
-                "title": %s,
-                "content": %s
+                "templateTitle": %s,
+                "templateContent": %s
             }
             """;
 
     @Override
     public String convertToJson() {
-        String titleVal = format(title);
-        String contentVal = format(content);
+        String titleVal = format(templateTitle);
+        String contentVal = format(templateContent);
         return TEMPLATE.formatted(titleVal, contentVal);
     }
 }

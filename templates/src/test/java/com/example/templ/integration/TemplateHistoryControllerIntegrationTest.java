@@ -1,6 +1,5 @@
 package com.example.templ.integration;
 
-
 import com.example.templ.builder.TemplateEntityJson;
 import com.example.templ.client.RecipientEntityClient;
 import com.example.templ.mockstest.RecipientEntityClientMock;
@@ -84,9 +83,9 @@ public class TemplateHistoryControllerIntegrationTest {
                         // Проверяются значения полей в ответе: id, title, content, imageUrl.
                         status().isCreated(),
                         jsonPath("$.id").exists(),
-                        jsonPath("$.title").value(templateEntityJson.title()),
-                        jsonPath("$.content").value(templateEntityJson.content()),
-                        jsonPath("$.imageUrl").isEmpty()
+                        jsonPath("$.header").value(templateEntityJson.templateTitle()),
+                        jsonPath("$.details").value(templateEntityJson.templateContent()),
+                        jsonPath("$.linkUrl").isEmpty()
                 );
     }
 
@@ -113,9 +112,9 @@ public class TemplateHistoryControllerIntegrationTest {
 
                         // Проверяются значения полей в ответе: id, title, content, imageUrl.
                         jsonPath("$.id").exists(),
-                        jsonPath("$.title").value(template.title()),
-                        jsonPath("$.content").value(template.content()),
-                        jsonPath("$.imageUrl").isEmpty()
+                        jsonPath("$.header").value(template.templateTitle()),
+                        jsonPath("$.details").value(template.templateContent()),
+                        jsonPath("$.linkUrl").isEmpty()
                 );
     }
 
@@ -146,9 +145,9 @@ public class TemplateHistoryControllerIntegrationTest {
 
                         // Проверяются значения полей в ответе: id, title, content, imageUrl, recipientIds.
                         jsonPath("$.id").exists(),
-                        jsonPath("$.title").value(template.title()),
-                        jsonPath("$.content").value(template.content()),
-                        jsonPath("$.imageUrl").isEmpty(),
+                        jsonPath("$.header").value(template.templateTitle()),
+                        jsonPath("$.details").value(template.templateContent()),
+                        jsonPath("$.linkUrl").isEmpty(),
                         jsonPath("$.recipientIds").isEmpty()
                 );
         return Long.valueOf(extractJsonValueByKey(result, "id"));

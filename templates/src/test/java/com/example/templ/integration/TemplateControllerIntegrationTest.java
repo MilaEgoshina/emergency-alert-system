@@ -33,8 +33,8 @@ public class TemplateControllerIntegrationTest extends IntegrationTestBase {
     static final Long CLIENT_ID = 1L;
 
     static final TemplateEntityJson TEMPLATE_ENTITY = TemplateEntityJsonBuilderTest.builder()
-            .content("content")
-            .title("title")
+            .templateContent("templateContent")
+            .templateTitle("templateTitle")
             .build();
 
     static final RecipientListEntityJson RECIPIENT_LIST_ENTITY_JSON = new RecipientListEntityJson(List.of(1, 2, 3, 1));
@@ -133,9 +133,9 @@ public class TemplateControllerIntegrationTest extends IntegrationTestBase {
                 .andExpectAll(
                         status().isCreated(),
                         jsonPath("$.id").exists(),
-                        jsonPath("$.title").value(templateEntityJson.title()),
-                        jsonPath("$.content").value(templateEntityJson.content()),
-                        jsonPath("$.imageUrl").isEmpty(),
+                        jsonPath("$.templateTitle").value(templateEntityJson.templateTitle()),
+                        jsonPath("$.templateContent").value(templateEntityJson.templateContent()),
+                        jsonPath("$.templateImage").isEmpty(),
                         jsonPath("$.recipientIds").isEmpty()
                 );
         return Long.valueOf(extractJsonValueByKey(result, "id"));
@@ -154,7 +154,7 @@ public class TemplateControllerIntegrationTest extends IntegrationTestBase {
                 .andExpectAll(
                         status().isConflict(),
                         jsonPath("$.message").value(
-                                messageService.getMessage("template.title_already_exists", templateEntityJson.title(), CLIENT_ID)
+                                messageService.getMessage("template.title_already_exists", templateEntityJson.templateTitle(), CLIENT_ID)
                         )
                 );
     }
@@ -188,9 +188,9 @@ public class TemplateControllerIntegrationTest extends IntegrationTestBase {
                 .andExpectAll(
                         status().isOk(), // проверка его соответствия заданному шаблону.
                         jsonPath("$.id").exists(),
-                        jsonPath("$.title").value(templateEntityJson.title()),
-                        jsonPath("$.content").value(templateEntityJson.content()),
-                        jsonPath("$.imageUrl").isEmpty(),
+                        jsonPath("$.templateTitle").value(templateEntityJson.templateTitle()),
+                        jsonPath("$.templateContent").value(templateEntityJson.templateContent()),
+                        jsonPath("$.templateImage").isEmpty(),
                         jsonPath("$.recipientIds").isEmpty()
                 );
     }
@@ -248,9 +248,9 @@ public class TemplateControllerIntegrationTest extends IntegrationTestBase {
                 .andExpectAll(
                         status().isCreated(),
                         jsonPath("$.id").exists(),
-                        jsonPath("$.title").value(templateEntityJson.title()),
-                        jsonPath("$.content").value(templateEntityJson.content()),
-                        jsonPath("$.imageUrl").isEmpty(),
+                        jsonPath("$.templateTitle").value(templateEntityJson.templateTitle()),
+                        jsonPath("$.templateContent").value(templateEntityJson.templateContent()),
+                        jsonPath("$.templateImage").isEmpty(),
                         jsonPath("$.recipientIds").isArray()
                 );
     }
@@ -295,9 +295,9 @@ public class TemplateControllerIntegrationTest extends IntegrationTestBase {
                 .andExpectAll(
                         status().isOk(),
                         jsonPath("$.id").exists(),
-                        jsonPath("$.title").value(templateEntityJson.title()),
-                        jsonPath("$.content").value(templateEntityJson.content()),
-                        jsonPath("$.imageUrl").isEmpty(),
+                        jsonPath("$.templateTitle").value(templateEntityJson.templateTitle()),
+                        jsonPath("$.templateContent").value(templateEntityJson.templateContent()),
+                        jsonPath("$.templateImage").isEmpty(),
                         jsonPath("$.recipientIds").isArray()
                 );
     }

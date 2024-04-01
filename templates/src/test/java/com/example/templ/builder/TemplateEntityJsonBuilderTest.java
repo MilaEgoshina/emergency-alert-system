@@ -1,25 +1,25 @@
 package com.example.templ.builder;
 
 public class TemplateEntityJsonBuilderTest extends TemplateEntityBuilderTest<TemplateEntityJson>{
-    private String title;
-    private String content;
+    private String templateTitle;
+    private String templateContent;
 
     public static TemplateEntityJsonBuilderTest builder() {
         return new TemplateEntityJsonBuilderTest();
     }
 
-    public TemplateEntityJsonBuilderTest title(String email) {
-        this.title = email;
+    public TemplateEntityJsonBuilderTest templateTitle(String email) {
+        this.templateTitle = email;
         return this;
     }
 
-    public TemplateEntityJsonBuilderTest content(String password) {
-        this.content = password;
+    public TemplateEntityJsonBuilderTest templateContent(String password) {
+        this.templateContent = password;
         return this;
     }
 
     @Override
     public TemplateEntityJson build() {
-        return new TemplateEntityJson(title, content);
+        return new TemplateEntityJson(templateTitle, templateContent);
     }
 }
