@@ -1,5 +1,6 @@
 package com.example.templ.entity;
 
+import com.example.templ.listener.RecipientIdListener;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,7 +21,7 @@ import lombok.NoArgsConstructor;
                 @UniqueConstraint(name = "recipient_ids_unq_template-recipient", columnNames = {"template_id", "recipientId"})
         }
 )
-//@EntityListeners(RecipientIdListener.class)
+@EntityListeners(RecipientIdListener.class)
 public class RecipientId implements BaseEntity<Long> {
 
     @Id
