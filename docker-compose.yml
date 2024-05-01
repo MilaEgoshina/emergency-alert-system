@@ -1,0 +1,196 @@
+version: '3.8'
+services:
+  security-service-postgres:
+    container_name: security-service-postgres
+    hostname: security-service-postgres
+    image: postgres:alpine3.17
+    restart: always
+    ports:
+      - '5433:5432'
+    environment:
+      POSTGRES_DB: security-service
+      POSTGRES_USER: postgres123
+      POSTGRES_PASSWORD: postgres123
+      PGDATA: /data
+    volumes:
+      - db-postgres-security:/data
+
+  recipient-postgres:
+    container_name: recipient-postgres
+    hostname: recipient-postgres
+    image: postgres:alpine3.17
+    restart: always
+    ports:
+      - '5435:5432'
+    environment:
+      POSTGRES_DB: recipient
+      POSTGRES_USER: postgres123
+      POSTGRES_PASSWORD: postgres123
+      PGDATA: /data
+    volumes:
+      - db-postgres-recipient:/data
+
+  templates-postgres:
+    container_name: templates-postgres
+    hostname: templates-postgres
+    image: postgres:alpine3.17
+    restart: always
+    ports:
+      - '5434:5432'
+    environment:
+      POSTGRES_DB: templates
+      POSTGRES_USER: postgres123
+      POSTGRES_PASSWORD: postgres123
+      PGDATA: /data
+    command:
+      - "postgres"
+      - "-c"
+      - "wal_level=logical"
+    volumes:
+      - db-postgres-template:/data
+
+  message-service-postgres:
+    container_name: message-service-postgres
+    hostname: message-service-postgres
+    image: postgres:alpine3.17
+    restart: always
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_DB: message
+      POSTGRES_USER: postgres123
+      POSTGRES_PASSWORD: postgres123
+      PGDATA: /data
+    volumes:
+      - db-postgres-message:/data
+
+  link-shortener-postgres:
+    container_name: link-shortener-postgres
+    hostname: link-shortener-postgres
+    image: postgres:alpine3.17
+    restart: always
+    ports:
+      - '5436:5432'
+    environment:
+      POSTGRES_DB: link-shortener
+      POSTGRES_USER: postgres123
+      POSTGRES_PASSWORD: postgres123
+      PGDATA: /data
+    volumes:
+      - db-postgres-link-shortener:/data
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.3.2
+    container_name: zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+
+  kafka:
+    image: confluentinc/cp-kafka:7.3.2
+    container_name: kafka
+    ports:
+      - "9092:9092"
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092,PLAINTEXT_INTERNAL://kafka:29092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+
+  discovery-server:
+    image: mila/discovery-server:1.0.1
+    restart: always
+    ports:
+      - '8761:8761'
+
+  api-gateway:
+    image: mila/api-gateway:1.0.1
+    restart: always
+    ports:
+      - '8080:8080'
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - discovery-server
+
+  security-service:
+    image: mila/security-service:1.0.5
+    restart: always
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - security-service-postgres
+      - discovery-server
+      - api-gateway
+
+  recipient:
+    image: mila/recipient-service:1.0.3
+    restart: always
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - recipient-postgres
+      - discovery-server
+      - api-gateway
+      - zookeeper
+      - kafka
+
+  templates:
+    image: mila/template-service:1.0.3
+    restart: always
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - templates-postgres
+      - discovery-server
+      - api-gateway
+      - zookeeper
+      - kafka
+
+  message-service:
+    image: mila/message-service:1.0.3
+    restart: always
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - message-service-postgres
+      - discovery-server
+      - api-gateway
+      - zookeeper
+      - kafka
+
+  sender:
+    image: mila/sender:1.0.3
+    restart: always
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - discovery-server
+      - zookeeper
+      - kafka
+
+  file-service:
+    image: mila/file-service:1.0.1
+    restart: always
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    depends_on:
+      - discovery-server
+      - api-gateway
+
+  bot-service:
+    image: mila/bot-service:1.0.1
+    restart: always
+
+volumes:
+  db-postgres: { }
+  db-postgres-security: { }
+  db-postgres-template: { }
+  db-postgres-recipient: { }
+  db-postgres-message: { }
+  db-postgres-shortener: { }
