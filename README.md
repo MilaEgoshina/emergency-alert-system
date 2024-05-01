@@ -72,10 +72,10 @@ The system is architected to efficiently distribute notifications to a large use
 
 To bolster reliability within the system, the following measures are implemented leveraging the rebalancer and sender services:
 
-1. **Sender Service:** Upon encountering an error during notification delivery, the sender service categorizes it as "RESENDING." This classification aids in identifying notifications requiring reprocessing in case of failures or inconsistencies.
+1. **Sender:** Upon encountering an error during notification delivery, the sender service categorizes it as "RESENDING." This classification aids in identifying notifications requiring reprocessing in case of failures or inconsistencies.
 
 
-2. **Rebalancer Service:** Periodically, the rebalancer service retrieves notifications marked as "RESENDING." This proactive approach monitors failed deliveries or pending notifications, preventing any potential data loss.
+2. **Rebalancer:** Periodically, the rebalancer service retrieves notifications marked as "RESENDING." This proactive approach monitors failed deliveries or pending notifications, preventing any potential data loss.
 
 
 3. **Kafka Transmission:** After retrieving "RESENDING" notifications, the rebalancer service transmits them back to the Kafka system. This step ensures consistent notification delivery, mitigating potential delays or issues encountered during the initial sending process.
