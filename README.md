@@ -55,7 +55,7 @@ The ENS is a multi-user application that enables the registration of a vast numb
 
 ## Architecture Structure Diagram
 
-![architecture structure](images/architecture-diagram.jpg)
+![architecture structure](images/diagram.jpg)
 
 ## Enhancing Scalability and Low Latency
 
