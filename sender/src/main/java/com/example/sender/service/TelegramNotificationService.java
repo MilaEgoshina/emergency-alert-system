@@ -41,7 +41,11 @@ public class TelegramNotificationService {
     }
 
     /**
-     * Вспомогательный метод для отправки сообщений
+     * Вспомогательный метод для отправки сообщений в Telegram.
+     *
+     * @param telegramUserId ID пользователя Telegram.
+     * @param message текст сообщения.
+     * @return true, если сообщение успешно отправлено, в противном случае - false.
      */
     private boolean sendMessageToUser(String telegramUserId, String message) {
         try {

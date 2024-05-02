@@ -23,11 +23,11 @@ public class CustomLogOutHandler implements LogoutHandler {
     private final JwtService jwtService;
 
     /**
-     *
+     * Выполняет процесс выхода пользователя из системы.
      *
      * @param request объект HttpServletRequest, который содержит информацию о запросе, включая заголовки.
-     * @param response
-     * @param authentication
+     * @param response объект HttpServletResponse, используется для отправки ответа клиенту.
+     * @param authentication объект Authentication, представляющий аутентифицированного пользователя.
      */
     @Override
     public void logout(

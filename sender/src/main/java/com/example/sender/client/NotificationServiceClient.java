@@ -13,6 +13,9 @@ public interface NotificationServiceClient {
     /**
      * Метод отправляет POST-запрос с идентификаторами клиента и уведомления в заголовках.
      * Этот метод вызывается после успешной отправки уведомления получателю, чтобы обновить статус уведомления на "отправлено".
+     *
+     * @param clientId Идентификатор клиента.
+     * @param notificationId Идентификатор уведомления.
      * @return ResponseEntity<NotificationResponse> ответ от удаленного API, содержащего объект NotificationResponse.
      */
     @PostMapping("/api/v1/notifications/{notificationId}/mark-sent")
@@ -24,6 +27,9 @@ public interface NotificationServiceClient {
     /**
      * Метод отправляет POST-запрос с идентификаторами клиента и уведомления в заголовках.
      * Этот метод вызывается, если произошла ошибка при отправке уведомления, и уведомление должно быть повторно отправлено.
+     *
+     * @param clientId Идентификатор клиента.
+     * @param notificationId Идентификатор уведомления.
      * @return ResponseEntity<NotificationResponse> ответ от удаленного API, содержащего объект NotificationResponse.
      */
     @PostMapping("/api/v1/notifications/{notificationId}/mark-resending")
@@ -35,6 +41,9 @@ public interface NotificationServiceClient {
     /**
      * Метод отправляет POST-запрос с идентификаторами клиента и уведомления в заголовках.
      * Этот метод вызывается в случае различных ошибок при обработке уведомления.
+     *
+     * @param clientId Идентификатор клиента.
+     * @param notificationId Идентификатор уведомления.
      * @return ResponseEntity<NotificationResponse> ответ от удаленного API, содержащего объект NotificationResponse.
      */
     @PostMapping("/api/v1/notifications/{notificationId}/mark-corrupt")
@@ -46,6 +55,9 @@ public interface NotificationServiceClient {
     /**
      * Метод отправляет POST-запрос с идентификаторами клиента и уведомления в заголовках.
      * Этот метод вызывается в случае различных ошибок при обработке уведомления.
+     *
+     * @param clientId Идентификатор клиента.
+     * @param notificationId Идентификатор уведомления.
      * @return ResponseEntity<NotificationResponse> ответ от удаленного API, содержащего объект NotificationResponse.
      */
     @PostMapping("/api/v1/notifications/{notificationId}/mark-error")

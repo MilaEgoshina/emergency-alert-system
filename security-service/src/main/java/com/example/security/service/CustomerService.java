@@ -19,6 +19,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+/**
+ * Сервис, предоставляющий функциональность для работы с клиентами.
+ * Реализует интерфейс UserDetailsService для обеспечения аутентификации пользователей.
+ */
 @Service
 @RequiredArgsConstructor
 public class CustomerService implements UserDetailsService {

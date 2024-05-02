@@ -13,6 +13,11 @@ import org.springframework.stereotype.Component;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
+/**
+ * Класс MessageListener представляет собой компонент слушателя Kafka, ответственный за обработку уведомлений.
+ * Он содержит методы для обработки уведомлений из различных каналов: телеграм, электронная почта и SMS.
+ * Этот класс слушает указанные темы Kafka для получения сообщений и выполняет соответствующие действия в зависимости от типа уведомления.
+ */
 @RequiredArgsConstructor
 @Slf4j
 @Component
@@ -28,8 +33,10 @@ public class MessageListener {
 
 
     /**
-     * Метод - слушатель для топика телеграм-уведомлений.
-     * @param message представляет полученное сообщение - Kafka.
+     * Метод-слушатель для топика телеграм-уведомлений.
+     * Обрабатывает полученные сообщения из темы Kafka и выполняет необходимые действия в соответствии с типом уведомления.
+     *
+     * @param message представляет полученное сообщение из Kafka.
      */
     @KafkaListener(
             // метод будет прослушивать сообщения из темы Kafka, указанной в атрибуте topics
@@ -64,6 +71,12 @@ public class MessageListener {
         }
     }
 
+    /**
+     * Метод-слушатель для топика email-уведомлений.
+     * Обрабатывает полученные сообщения из темы Kafka и выполняет необходимые действия в соответствии с типом уведомления.
+     *
+     * @param message представляет полученное сообщение из Kafka.
+     */
     @KafkaListener(
             topics = "#{'${spring.kafka.topics.messages.email}'}",
             groupId = "emergency",
@@ -90,6 +103,12 @@ public class MessageListener {
         }
     }
 
+    /**
+     * Метод-слушатель для топика sms-уведомлений.
+     * Обрабатывает полученные сообщения из темы Kafka и выполняет необходимые действия в соответствии с типом уведомления.
+     *
+     * @param message представляет полученное сообщение из Kafka.
+     */
     @KafkaListener(
             topics = "#{'${spring.kafka.topics.messages.phone}'}",
             groupId = "emergency",
@@ -130,6 +149,10 @@ public class MessageListener {
         );
     }
 
+    /**
+     * Метод, который определяет, следует ли имитировать ошибку при отправке уведомления.
+     * @return true, если необходимо имитировать ошибку, в противном случае - false.
+     */
     private boolean shouldSimulateError() {
         return ThreadLocalRandom.current().nextInt(100) <= 33;
     }

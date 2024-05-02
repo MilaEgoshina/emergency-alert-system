@@ -12,6 +12,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Collections;
 
+/**
+ * Сущность, представляющая пользователя.
+ */
 @Data
 @Builder
 @NoArgsConstructor
@@ -30,15 +33,28 @@ import java.util.Collections;
 )
 public class Customer implements UserDetails, BaseEntity<Long> {
 
+    /**
+     * Уникальный идентификатор пользователя.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    /**
+     * Роль пользователя.
+     */
     // аннотация указывает, что значение перечисления должно храниться в базе данных как строка.
     @Enumerated(EnumType.STRING)
     private CustomerRole customerRole;
 
+    /**
+     * Email пользователя. Уникальное значение.
+     */
     private String email;
+
+    /**
+     * Пароль пользователя.
+     */
     private String password;
 
     @Override
