@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.http.HttpStatus.CREATED;
 
+/**
+ * Контроллер для управления вариантами ответа шаблонов.
+ */
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/templates")
@@ -18,6 +21,14 @@ public class TemplateResponseEntityController {
 
     private final TemplateResponseEntityService templateResponseEntityService;
 
+    /**
+     * Устанавливает новые варианты ответа для шаблона.
+     *
+     * @param clientId идентификатор клиента
+     * @param templateId идентификатор шаблона
+     * @param optionsRequest запрос на установку новых вариантов ответа
+     * @return ответ с обновленным шаблоном
+     */
     @PostMapping("/{id}/options")
     @Operation(summary = "Установить новые варианты ответа для шаблона")
     public ResponseEntity<TemplateEntityResponse> setResponseOptions(

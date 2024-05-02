@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.*;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
 
+/**
+ * Контроллер для управления сущностями шаблонов.
+ */
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/templates")
@@ -19,6 +22,13 @@ public class TemplateEntityController {
 
     private final TemplateEntityService templateEntityService;
 
+    /**
+     * Создает новый шаблон.
+     *
+     * @param clientId идентификатор клиента
+     * @param request запрос на создание шаблона
+     * @return ответ с созданным шаблоном
+     */
     @PostMapping("/")
     @Operation(summary = "Создать шаблон")
     public ResponseEntity<TemplateEntityResponse> createTemplate(
@@ -28,6 +38,13 @@ public class TemplateEntityController {
         return ResponseEntity.status(CREATED).body(templateEntityService.createTemplate(clientId, request));
     }
 
+    /**
+     * Получает шаблон по его идентификатору.
+     *
+     * @param clientId   идентификатор клиента
+     * @param templateId идентификатор шаблона
+     * @return ответ с запрошенным шаблоном
+     */
     @GetMapping("/{id}")
     @Operation(summary = "Получить шаблон по ID")
     public ResponseEntity<TemplateEntityResponse> getTemplate(
@@ -37,6 +54,13 @@ public class TemplateEntityController {
         return ResponseEntity.status(OK).body(templateEntityService.getTemplate(clientId, templateId));
     }
 
+    /**
+     * Удаляет шаблон по его идентификатору.
+     *
+     * @param clientId идентификатор клиента
+     * @param templateId идентификатор шаблона
+     * @return ответ с результатом удаления (успешно или нет)
+     */
     @DeleteMapping("/{id}")
     @Operation(summary = "Удалить шаблон по ID")
     public ResponseEntity<Boolean> deleteTemplate(

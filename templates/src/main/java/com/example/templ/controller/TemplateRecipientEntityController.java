@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.*;
 import static org.springframework.http.HttpStatus.CREATED;
 import static org.springframework.http.HttpStatus.OK;
 
+/**
+ * Контроллер для управления получателями шаблонов.
+ */
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/templates")
@@ -20,6 +23,14 @@ public class TemplateRecipientEntityController {
     private final TemplateRecipientEntityService templateRecipientEntityService;
 
 
+    /**
+     * Добавляет получателей к шаблону.
+     *
+     * @param clientId идентификатор клиента
+     * @param templateId идентификатор шаблона
+     * @param listRequest запрос на добавление списка получателей
+     * @return ответ с обновленным шаблоном
+     */
     @PostMapping("/{id}/recipients")
     @Operation(summary = "Добавить получателя к шаблону")
     public ResponseEntity<TemplateEntityResponse> addRecipients(
@@ -30,6 +41,14 @@ public class TemplateRecipientEntityController {
         return ResponseEntity.status(CREATED).body(templateRecipientEntityService.addRecipients(clientId, templateId, listRequest));
     }
 
+    /**
+     * Удаляет получателей из шаблона.
+     *
+     * @param clientId идентификатор клиента
+     * @param templateId идентификатор шаблона
+     * @param listRequest запрос на удаление списка получателей
+     * @return ответ с обновленным шаблоном
+     */
     @DeleteMapping("/{id}/recipients")
     @Operation(summary = "Удалить получателя из шаблона")
     public ResponseEntity<TemplateEntityResponse> removeRecipients(
