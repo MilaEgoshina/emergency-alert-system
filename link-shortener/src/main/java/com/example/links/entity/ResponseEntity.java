@@ -10,6 +10,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Класс - сущность ответа в базе данных.
+ */
 @Data
 @Builder
 @NoArgsConstructor

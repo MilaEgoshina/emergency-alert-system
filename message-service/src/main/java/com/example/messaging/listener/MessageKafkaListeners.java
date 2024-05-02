@@ -23,10 +23,12 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.function.Supplier;
 
-
+/**
+ * Класс, который представляет собой слушателей Kafka для отправки сообщений через различные каналы.
+ */
 @Component
 @RequiredArgsConstructor
-public class MesageKafkaListeners {
+public class MessageKafkaListeners {
 
 
     private final KafkaTemplate<String, MessageKafka> kafkaTemplate;

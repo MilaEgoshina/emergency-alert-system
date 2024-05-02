@@ -13,11 +13,16 @@ import org.springframework.web.server.ServerWebExchange;
 @Component
 public class AuthenticationFilterFactory extends AbstractGatewayFilterFactory<AuthenticationFilterFactory.Config> {
 
-    // определения, требует ли путь запроса аутентификации
-    private final PathChecker pathChecker;
-    private final TokenValidator tokenValidator;
+    private final PathChecker pathChecker; // определяет, требует ли путь запроса аутентификации
+    private final TokenValidator tokenValidator; // валидация JWT - токенов
 
 
+    /**
+     * Конструктор класса.
+     * @param configClass класс конфигурации.
+     * @param pathChecker объект для проверки пути запроса.
+     * @param tokenValidator объект для валидации токена.
+     */
     public AuthenticationFilterFactory(Class<Config> configClass, PathChecker pathChecker, TokenValidator tokenValidator) {
         super(configClass);
         this.pathChecker = pathChecker;
@@ -27,8 +32,8 @@ public class AuthenticationFilterFactory extends AbstractGatewayFilterFactory<Au
 
     /**
      * Метод, который определяет логику фильтра, проверяя, является ли путь запроса защищенным
-     * и валидируя токен аутентификации.
-     * @param config
+     * и, валидируя токен аутентификации.
+     * @param config конфигурация фильтра.
      * @return объект GatewayFilter, который является функциональным интерфейсом,
      * принимающим ServerWebExchange и GatewayFilterChain.
      */
@@ -55,9 +60,10 @@ public class AuthenticationFilterFactory extends AbstractGatewayFilterFactory<Au
 
     /**
      * Вспомогательный метод, который отвечает за добавление к ServerWebExchange
+     *
      * заголовка X-User с идентификатором пользователя.
-     * @param exchange
-     * @param token
+     * @param exchange объект ServerWebExchange.
+     * @param token токен аутентификации.
      * @return возвращает новый экземпляр ServerWebExchange, который будет использоваться дальше в цепочке фильтров.
      */
     private ServerWebExchange attachUserHeader(ServerWebExchange exchange, String token) {
@@ -71,7 +77,8 @@ public class AuthenticationFilterFactory extends AbstractGatewayFilterFactory<Au
 
     /**
      * Утилитный метод для добавления заголовка в ServerHttpRequest.
-     * @param exchange
+     *
+     * @param exchange объект ServerWebExchange.
      * @param name имя заголовка
      * @param value значение заголовка
      * @return возвращает новый экземпляр ServerHttpRequest, который затем используется для создания

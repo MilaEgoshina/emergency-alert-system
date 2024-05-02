@@ -17,6 +17,9 @@ import java.util.UUID;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+/**
+ * Сервис, который предоставляет функционал для работы с сущностями ответа и ссылки.
+ */
 @Service
 @RequiredArgsConstructor
 public class ResponseEntityService {
@@ -27,6 +30,11 @@ public class ResponseEntityService {
 
     private final ResponseEntityMapper responseEntityMapper;
 
+    /**
+     * Метод для создания сущности ответа на основе параметров запроса.
+     * @param request параметры сообщения для создания ответа
+     * @return идентификатор созданного ответа
+     */
     public Long createResponseEntity(MessageOptionsRequest request) {
         return Optional.of(request)
                 .map(responseEntityMapper::toResponse)
@@ -35,6 +43,11 @@ public class ResponseEntityService {
                 .orElseThrow();
     }
 
+    /**
+     * Метод для генерации сущности ссылки на ответ по его идентификатору.
+     * @param responseId идентификатор ответа
+     * @return сгенерированная сущность ссылки на ответ
+     */
     public LinkEntityResponse generateResponse(Long responseId) {
         Map<String, String> linksOptionMap = responseEntityRepository.findById(responseId)
                 .map(ResponseEntity::getOptions)

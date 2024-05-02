@@ -18,17 +18,21 @@ public class CustomKafkaTopicConfig {
     // имена топиков, которые будут созданы:
 
     @Value("${spring.kafka.topics.messages.email}")
-    private String emailKafkaTopic;
+    private String emailKafkaTopic; // Наименование топика для сообщений по электронной почте.
 
     @Value("${spring.kafka.topics.messages.phone}")
-    private String phoneKafkaTopic;
+    private String phoneKafkaTopic;  // Наименование топика для сообщений по телефону.
 
     @Value("${spring.kafka.topics.messages.telegram}")
-    private String telegramKafkaTopic;
+    private String telegramKafkaTopic; // Наименование топика для сообщений в Telegram.
 
     @Value("${spring.kafka.topics.separator}")
-    private String separatorKafkaTopic;
+    private String separatorKafkaTopic; // Наименование топика для разделителя.
 
+    /**
+     * Метод создания топика для сообщений по электронной почте.
+     * @return созданный топик для сообщений по электронной почте
+     */
     @Bean
     public NewTopic createEmailMessageTopic() {
         return TopicBuilder.name(emailKafkaTopic) // создание имя топика Kafka.
@@ -36,6 +40,10 @@ public class CustomKafkaTopicConfig {
                 .build(); //  возвращает экземпляр NewTopic, который представляет новый топик в Kafka.
     }
 
+    /**
+     * Метод создания топика для сообщений по телефону.
+     * @return созданный топик для сообщений по телефону
+     */
     @Bean
     public NewTopic createPhoneMessageTopic() {
         return TopicBuilder.name(phoneKafkaTopic)
@@ -50,6 +58,10 @@ public class CustomKafkaTopicConfig {
                 .build();
     }
 
+    /**
+     * Метод создания топика для сообщений в Telegram.
+     * @return созданный топик для сообщений в Telegram
+     */
     @Bean
     public NewTopic createSeparatorTopic() {
         return TopicBuilder.name(separatorKafkaTopic)

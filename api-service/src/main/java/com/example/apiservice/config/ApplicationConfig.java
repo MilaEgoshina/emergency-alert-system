@@ -13,6 +13,9 @@ import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
 
+/**
+ * Класс конфигурации Spring приложения.
+ */
 @Configuration
 public class ApplicationConfig {
 
@@ -28,9 +31,8 @@ public class ApplicationConfig {
     }
 
     /**
-     * Метод, который определяет бин CorsWebFilter и используется для настройки политики
-     * CORS (Cross-Origin Resource Sharing)
-     * @return CorsWebFilter
+     * Метод определяет бин CorsWebFilter для настройки политики CORS (Cross-Origin Resource Sharing).
+     * @return CorsWebFilter для обработки CORS настройки
      */
     @Bean
     public CorsWebFilter corsWebFilterConfig() {
@@ -50,7 +52,7 @@ public class ApplicationConfig {
 
     /**
      * Метод определяет бин RestTemplate для выполнения HTTP-запросов и получения ответов.
-     * @return RestTemplate
+     * @return RestTemplate для работы с HTTP-запросами
      */
     @Bean
     public RestTemplate restOperationsTemplate() {

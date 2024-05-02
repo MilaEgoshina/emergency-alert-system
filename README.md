@@ -9,13 +9,12 @@ Welcome to the Emergency Notification System (ENS), a robust and scalable applic
 - [Functional Requirements](#functional-requirements)
 - [Non-Functional Requirements](#non-functional-requirements)
 - [Business Requirements](#business-requirements)
-- [Architecture Diagram](#architecture-diagram)
+- [Architecture Structure Diagram](#architecture-structure-diagram)
 - [Enhancing Scalability and Low Latency](#enhancing-scalability-and-low-latency)
 - [Enhancing Reliability](#enhancing-reliability)
 - [Security Measures](#security-measures)
 - [Getting Started](#getting-started)
 - [Usage](#usage)
-- [Code Coverage](#code-coverage)
 - [Documentation](#documentation)
 - [Contributing](#contributing)
 
@@ -54,7 +53,9 @@ The ENS is a multi-user application that enables the registration of a vast numb
 - **Bulk Messaging for Corporate Clients**: The system should support one-time messaging to up to 300,000 recipients for corporate clients.
 - **Message Format**: All notifications must be in text format, with an average length of 300 characters.
 
-## Architecture Diagram
+## Architecture Structure Diagram
+
+![architecture structure](images/architecture-diagram.jpg)
 
 ## Enhancing Scalability and Low Latency
 
@@ -114,8 +115,6 @@ To get started with the ENS, follow these steps:
 ## Usage
 
 Once the application is running, users can register, create notification templates, and send notifications to recipients. Recipients can then respond to these notifications with their status or other relevant information.
-
-## Code Coverage:
 
 ## Documentation:
 
