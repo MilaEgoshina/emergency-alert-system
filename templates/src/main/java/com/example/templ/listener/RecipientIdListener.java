@@ -10,7 +10,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.kafka.core.KafkaTemplate;
 
 /**
- * Класс - слушатель событий для сущности RecipientId.
+ * Класс-слушатель событий для сущности RecipientId.
+ * Отправляет сообщения в Kafka при удалении или сохранении сущности RecipientId через kafkaTemplate.
  */
 @RequiredArgsConstructor
 public class RecipientIdListener {
@@ -21,18 +22,29 @@ public class RecipientIdListener {
     @Value("${spring.kafka.topics.recipient-update}")
     private String recipientUpdateTopic;
 
-    // метод отправляет сообщение в топик Kafka для уведомления об удалении сущности RecipientId.
+    /**
+     * При удалении сущности RecipientId отправляет сообщение в топик Kafka для уведомления об этом событии.
+     * @param recipientId удаляемая сущность RecipientId
+     */
     @PostRemove
     public void postRemove(RecipientId recipientId) {
         sendKafkaEvent(recipientId, Actions.REMOVE);
     }
 
-    // метод отправляет сообщение в топик Kafka для уведомления о сохранении сущности RecipientId.
+    /**
+     * При сохранении сущности RecipientId отправляет сообщение в топик Kafka для уведомления об этом событии.
+     * @param recipientId сохраняемая сущность RecipientId
+     */
     @PostPersist
     public void postPersist(RecipientId recipientId){
         sendKafkaEvent(recipientId, Actions.PERSISTS);
     }
 
+    /**
+     * Отправляет сообщение в топик Kafka для уведомления об изменениях сущности RecipientId.
+     * @param recipientId изменяемая сущность RecipientId
+     * @param actions действие, которое произошло с сущностью (удаление или сохранение)
+     */
     private void sendKafkaEvent(RecipientId recipientId, Actions actions){
         kafkaTemplate.send(
                 recipientUpdateTopic,

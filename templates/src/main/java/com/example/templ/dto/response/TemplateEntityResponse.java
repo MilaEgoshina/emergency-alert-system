@@ -5,13 +5,6 @@ import java.util.List;
 
 /**
  * Класс TemplateEntityResponse представляет собой объект ответа, содержащий информацию о шаблоне сообщения.
- *
- * Поля:
- * - id: уникальный идентификатор шаблона
- * - templateTitle: заголовок шаблона
- * - templateContent: содержимое шаблона
- * - templateImage: изображение, связанное с шаблоном
- * - recipientIds: список идентификаторов получателей шаблона
  */
 public record TemplateEntityResponse(
 
@@ -21,22 +14,22 @@ public record TemplateEntityResponse(
         Long id,
 
         /**
-         * заголовок шаблона
+         * Заголовок шаблона
          */
         String templateTitle,
 
         /**
-         * содержимое шаблона
+         * Содержимое шаблона
          */
         String templateContent,
 
         /**
-         * изображение, связанное с шаблоном
+         * Изображение, связанное с шаблоном
          */
         String templateImage,
 
         /**
-         * список идентификаторов получателей шаблона
+         * Список идентификаторов получателей шаблона
          */
         List<RecipientEntityResponse> recipientIds
 ) {

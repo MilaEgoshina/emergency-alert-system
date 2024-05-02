@@ -14,6 +14,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+/**
+ * Сервис для работы с историей шаблонов TemplateHistoryEntity.
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -27,6 +30,15 @@ public class TemplateHistoryEntityService {
 
     private final MessageService messageService;
 
+    /**
+     * Создает запись в истории шаблонов для указанного клиента.
+     *
+     * @param clientId идентификатор клиента
+     * @param templateId идентификатор шаблона
+     * @return объект TemplateHistoryEntityResponse
+     * @throws TemplateEntityNotFoundException если шаблон не найден
+     * @throws TemplateHistoryNotFoundException если создание записи в истории не удалось
+     */
     public TemplateHistoryEntityResponse createTemplateHistory(Long clientId, Long templateId) {
         TemplateEntity template = templateEntityRepository.getByIdAndClientId(templateId, clientId)
                 .orElseThrow(() -> new TemplateEntityNotFoundException(
@@ -53,6 +65,14 @@ public class TemplateHistoryEntityService {
                 ));
     }
 
+    /**
+     * Возвращает запись истории шаблона для указанного клиента по идентификатору.
+     *
+     * @param clientId идентификатор клиента
+     * @param templateHistoryId идентификатор записи в истории
+     * @return объект TemplateHistoryEntityResponse
+     * @throws TemplateHistoryNotFoundException если запись истории не найдена
+     */
     public TemplateHistoryEntityResponse getTemplateHistory(Long clientId, Long templateHistoryId) {
         return templateHistoryRepository.getByIdAndClientId(templateHistoryId, clientId)
                 .map(templateEntityMapper::toTemplateHistoryResponse)

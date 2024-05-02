@@ -14,10 +14,24 @@ public record TemplateHistoryEntityResponse(
          */
         Long id,
 
-
+        /**
+         * Уникальный идентификатор ответа.
+         */
         Long responseId,
+
+        /**
+         * Заголовок шаблона.
+         */
         String header,
+
+        /**
+         * Детали шаблона.
+         */
         String details,
+
+        /**
+         * URL ссылки.
+         */
         String linkURL
 ) {
 }

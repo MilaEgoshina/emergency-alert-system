@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 /**
- * Класс - сервис для обеспечения контроля над созданием, получением и удалением шаблонов в системе.
+ * Класс-сервис для обеспечения контроля над созданием, получением и удалением шаблонов в системе.
  */
 @Slf4j
 @Service
@@ -30,6 +30,15 @@ public class TemplateEntityService {
 
     private final TemplateEntityMapper templateEntityMapper;
 
+    /**
+     * Метод для создания шаблона.
+     *
+     * @param clientId Идентификатор клиента.
+     * @param request Запрос на создание шаблона.
+     * @return Ответ на создание шаблона.
+     * @throws TemplateTitleAlreadyExistsException если шаблон с таким названием уже существует для данного клиента.
+     * @throws TemplateEntityCreationException если произошла ошибка при создании шаблона.
+     */
     public TemplateEntityResponse createTemplate(Long clientId, TemplateEntityRequest request) {
         if (templateEntityRepository.checkIfTemplateExistsForClientAndTitle(clientId, request.title())) {
             throw new TemplateTitleAlreadyExistsException(
@@ -48,6 +57,14 @@ public class TemplateEntityService {
                 ));
     }
 
+    /**
+     * Метод для получения шаблона.
+     *
+     * @param clientId Идентификатор клиента.
+     * @param templateId Идентификатор шаблона.
+     * @return Ответ на запрос шаблона.
+     * @throws TemplateEntityNotFoundException если шаблон не найден.
+     */
     public TemplateEntityResponse getTemplate(Long clientId, Long templateId) {
         return templateEntityRepository.getByIdAndClientId(templateId, clientId)
                 .map(template -> templateEntityMapper.toResponse(template, recipientEntityClient))
@@ -56,6 +73,13 @@ public class TemplateEntityService {
                 ));
     }
 
+    /**
+     * Метод для удаления шаблона.
+     *
+     * @param clientId Идентификатор клиента.
+     * @param templateId Идентификатор шаблона.
+     * @return Результат операции удаления шаблона (true, если успешно удален, false в противном случае).
+     */
     public Boolean deleteTemplate(Long clientId, Long templateId) {
         return templateEntityRepository.getByIdAndClientId(templateId, clientId)
                 .map(template -> {

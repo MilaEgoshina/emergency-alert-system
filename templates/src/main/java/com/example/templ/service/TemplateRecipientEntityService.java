@@ -17,6 +17,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+/**
+ * Класс-сервис для управления получателями в шаблонах.
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -34,6 +37,14 @@ public class TemplateRecipientEntityService {
     private final TemplateEntityMapper templateEntityMapper;
 
 
+    /**
+     * Метод для добавления получателей к шаблону.
+     *
+     * @param clientId Идентификатор клиента.
+     * @param templateId Идентификатор шаблона.
+     * @param listRequest Запрос на добавление получателей.
+     * @return Ответ на запрос с добавленными получателями к шаблону.
+     */
     public TemplateEntityResponse addRecipients(Long clientId, Long templateId, RecipientListRequest listRequest) {
         TemplateEntity template = templateEntityRepository.getByIdAndClientId(templateId, clientId)
                 .orElseThrow(() -> new TemplateEntityNotFoundException(
@@ -59,6 +70,14 @@ public class TemplateRecipientEntityService {
         return templateEntityMapper.toResponse(template, recipientEntityClient);
     }
 
+    /**
+     * Метод для удаления получателей из шаблона.
+     *
+     * @param clientId Идентификатор клиента.
+     * @param templateId Идентификатор шаблона.
+     * @param request Запрос на удаление получателей.
+     * @return Ответ на запрос с удаленными получателями из шаблона.
+     */
     public TemplateEntityResponse removeRecipients(Long clientId, Long templateId, RecipientListRequest request) {
         TemplateEntity template = templateEntityRepository.getByIdAndClientId(templateId, clientId)
                 .orElseThrow(() -> new TemplateEntityNotFoundException(

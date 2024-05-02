@@ -12,6 +12,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+/**
+ * Сервис для работы с сущностью TemplateResponseEntity.
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -27,6 +30,15 @@ public class TemplateResponseEntityService {
 
     private final TemplateEntityMapper templateEntityMapper;
 
+    /**
+     * Устанавливает опции ответа для указанного шаблона и клиента.
+     *
+     * @param clientId идентификатор клиента
+     * @param templateId идентификатор шаблона
+     * @param messageRequest запрос с опциями сообщения
+     * @return объект TemplateEntityResponse
+     * @throws TemplateEntityNotFoundException если шаблон не найден
+     */
     public TemplateEntityResponse setResponseOptions(Long clientId, Long templateId, MessageOptionsRequest messageRequest) {
         return templateEntityRepository.getByIdAndClientId(templateId, clientId)
                 .map(template -> template.setResponse(linkShortenerClient.generate(messageRequest).getBody()))
