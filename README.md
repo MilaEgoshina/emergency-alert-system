@@ -118,6 +118,8 @@ Once the application is running, users can register, create notification templat
 
 ## Documentation:
 
+Please, open this [link](http://localhost:8080/webjars/swagger-ui/index.html) in order to find API documentation for this project.
+
 ## Contributing
 
 Feel free to contribute to the project by submitting bug reports, feature requests, or pull requests. Your input is valuable in enhancing the functionality and user experience of the ENS.
