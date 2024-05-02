@@ -28,6 +28,9 @@ import java.util.Optional;
 import static java.time.temporal.ChronoUnit.SECONDS;
 
 
+/**
+ * Класс, отвечающий за управление историей сообщений, их статусами и выполнением операций с сообщениями.
+ */
 @Service
 @RequiredArgsConstructor
 public class MessageService {
@@ -87,7 +90,7 @@ public class MessageService {
             kafkaTemplate.send(recipientCollectionDistributionTopic, collectionKafka);
         }
 
-        return "Notifications has been sent.";
+        return "Messages has been sent.";
     }
 
     /**
@@ -126,14 +129,36 @@ public class MessageService {
                 // этих уведомлений в объекты MessageKafka
                 .toList();
     }
+
+    /**
+     * Метод для установки статуса DELIVERED для указанного сообщения.
+     *
+     * @param clientId идентификатор клиента
+     * @param messageId идентификатор сообщения
+     * @return объект MessageHistoryResponse с обновленным статусом сообщения
+     */
     public MessageHistoryResponse setMessageAsDelivered(Long clientId, Long messageId) {
         return setMessageAsExecutedWithState(clientId, messageId, MessageState.DELIVERED);
     }
 
+    /**
+     * Метод для установки статуса FAILED для указанного сообщения.
+     *
+     * @param clientId идентификатор клиента
+     * @param messageId идентификатор сообщения
+     * @return объект MessageHistoryResponse с обновленным статусом сообщения
+     */
     public MessageHistoryResponse setMessageAsFailed(Long clientId, Long messageId) {
         return setMessageAsExecutedWithState(clientId, messageId, MessageState.FAILED);
     }
 
+    /**
+     * Метод для установки статуса INVALID для указанного сообщения.
+     *
+     * @param clientId идентификатор клиента
+     * @param messageId идентификатор сообщения
+     * @return объект MessageHistoryResponse с обновленным статусом сообщения
+     */
     public MessageHistoryResponse setMessageAsInvalid(Long clientId, Long messageId) {
         return setMessageAsExecutedWithState(clientId, messageId, MessageState.INVALID);
     }
@@ -198,6 +223,11 @@ public class MessageService {
                 ));
     }
 
+    /**
+     * Приватный метод для разделения списка идентификаторов получателей на подсписки.
+     * @param list список идентификаторов
+     * @return список списков идентификаторов, разделенный на подсписки
+     */
     private List<List<Long>> splitRecipients(List<Long> list) {
         return ListUtil.separator(list, instanceTracker.getRunningInstanceCount(serviceName));
     }
