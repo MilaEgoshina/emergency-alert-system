@@ -13,7 +13,9 @@ import java.time.ZonedDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
-//Является централизованным обработчиком исключений для всех контроллеров.
+/**
+ * Является централизованным обработчиком исключений для всех контроллеров.
+ */
 @RestControllerAdvice
 public class ExceptionHandlers {
 

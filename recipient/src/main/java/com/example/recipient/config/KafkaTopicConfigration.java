@@ -7,6 +7,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.TopicBuilder;
 
+/**
+ * Конфигурационный класс для настройки топиков Kafka.
+ * Определяет бины для создания различных топиков Kafka.
+ */
 @Configuration
 public class KafkaTopicConfigration {
 
@@ -15,6 +19,12 @@ public class KafkaTopicConfigration {
 
     @Value("${spring.kafka.topics.template-update}")
     private String templateUpdateTopicName;
+
+    /**
+     * Создает топик для обновления шаблонов.
+     *
+     * @return Новый топик Kafka для обновления шаблонов.
+     */
 
     @Bean
     public NewTopic templateUpdateTopic() {

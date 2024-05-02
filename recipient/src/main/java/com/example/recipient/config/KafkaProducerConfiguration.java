@@ -14,12 +14,24 @@ import org.springframework.kafka.support.serializer.JsonSerializer;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Конфигурационный класс для настройки Kafka Producer.
+ * Определяет бины для настройки и создания Kafka Producer.
+ */
 @Configuration
 public class KafkaProducerConfiguration {
 
+    /**
+     * Устанавливает значение для адреса сервера Kafka.
+     */
     @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapServers;
 
+    /**
+     * Создает свойства для конфигурации Kafka Producer.
+     *
+     * @return Map- свойств для конфигурации Kafka Producer.
+     */
     @Bean
     public Map<String, Object> producerProperties() {
         Map<String, Object> properties = new HashMap<>();
@@ -30,11 +42,21 @@ public class KafkaProducerConfiguration {
         return properties;
     }
 
+    /**
+     * Создает фабрику для Kafka Producer.
+     *
+     * @return Фабрика для Kafka Producer.
+     */
     @Bean
     public ProducerFactory<String, ?> producerFactory() {
         return new DefaultKafkaProducerFactory<>(producerProperties());
     }
 
+    /**
+     * Создает шаблон Kafka Template для отправки сообщений.
+     *
+     * @return Kafka Template для отправки сообщений.
+     */
     @Bean
     public KafkaTemplate<String, ?> kafkaTemplate() {
         return new KafkaTemplate<>(producerFactory());

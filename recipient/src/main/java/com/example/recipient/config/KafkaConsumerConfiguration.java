@@ -18,13 +18,20 @@ import org.springframework.kafka.support.serializer.JsonDeserializer;
 import java.util.HashMap;
 import java.util.Map;
 
-
+/**
+ * Конфигурация для потребителя Kafka, который будет слушать сообщения, сериализованные в формате JSON.
+ */
 @Configuration
 public class KafkaConsumerConfiguration {
 
     @Value("${spring.kafka.bootstrap-servers}")
     private String bootstrapServers;
 
+    /**
+     * Метод для получения свойств потребителя Kafka.
+     *
+     * @return свойства потребителя Kafka
+     */
     @Bean
     public Map<String, Object> consumerProperties() {
         Map<String, Object> properties = new HashMap<>();
@@ -38,11 +45,21 @@ public class KafkaConsumerConfiguration {
         return properties;
     }
 
+    /**
+     * Метод для создания фабрики потребителя Kafka.
+     *
+     * @return фабрика потребителя Kafka
+     */
     @Bean
     public ConsumerFactory<String, RecipientTemplateKafkaRecord> consumerFactory() {
         return new DefaultKafkaConsumerFactory<>(consumerProperties());
     }
 
+    /**
+     * Метод для создания контейнера сообщений Kafka.
+     *
+     * @return контейнер сообщений Kafka
+     */
     @Bean
     public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, RecipientTemplateKafkaRecord>> kafkaListenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, RecipientTemplateKafkaRecord> factory = new ConcurrentKafkaListenerContainerFactory<>();

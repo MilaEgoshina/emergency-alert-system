@@ -3,7 +3,9 @@ package com.example.messaging.use;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * Утилитарный класс для работы со списками.
+ */
 public class ListUtil {
 
     /**
