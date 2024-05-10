@@ -1,6 +1,6 @@
-# Emergency Notification System
+# Emergency Alert System for Population
 
-Welcome to the Emergency Notification System (ENS), a robust and scalable application designed to ensure the safety and well-being of over 10 million users by providing timely alerts and notifications during emergencies. This system is built with Spring Boot, Spring Security, Spring MVC, Apache Kafka, Spring Data, and Gradle, ensuring high performance, security, and reliability.
+Welcome to the Emergency Alert System (EAS), a robust and scalable application designed to ensure the safety and well-being of over 10 million users by providing timely alerts and notifications during emergencies. This system is built with Spring Boot, Spring Security, Spring MVC, Apache Kafka, Spring Data, and Gradle, ensuring high performance, security, and reliability.
 
 ## Table of Contents
 
@@ -21,7 +21,7 @@ Welcome to the Emergency Notification System (ENS), a robust and scalable applic
 
 ## Overview
 
-The ENS is a multi-user application that enables the registration of a vast number of users, the sending of notifications across multiple channels, and the ability for recipients to respond with their safety status or other relevant information. It also allows for the creation of notification templates for quick dispatch during critical situations.
+The EAS is a multi-user application that enables the registration of a vast number of users, the sending of notifications across multiple channels, and the ability for recipients to respond with their safety status or other relevant information. It also allows for the creation of notification templates for quick dispatch during critical situations.
 
 ## Features
 
@@ -104,9 +104,9 @@ By implementing these security measures, the system safeguards sensitive informa
 
 ## Getting Started
 
-To get started with the ENS, follow these steps:
+To get started with the EAS, follow these steps:
 
-1. Clone the repository: `git clone https://github.com/your-username/emergency-notification-system.git`
+1. Clone the repository: `git clone https://github.com/MilaEgoshina/emergency-alert-system.git`
 2. Navigate to the project directory: `cd emergency-notification-system`
 3. Install dependencies using Gradle: `./gradlew build`
 4. Configure the application properties for database connections, Kafka settings, and other necessary configurations.
@@ -118,7 +118,7 @@ Once the application is running, users can register, create notification templat
 
 ## Documentation:
 
-Please, open this [link](http://localhost:8080/webjars/swagger-ui/index.html) in order to find API documentation for this project.
+Please, open this [link](http://localhost:8080/swagger-ui/index.html) in order to find API documentation for this project.
 
 ## Contributing
 
